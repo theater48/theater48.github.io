@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <link rel="icon" type="image/png" href="img/favicon-theater-jkt48.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Live Show - JKT48 Show Theater</title>
@@ -337,7 +338,7 @@ body.dark .detail-footer{color:#9ca3af;border-top-color:#374151}
 </head>
 <body>
 <header class="main-header">
-  <div class="theater-header" onclick="window.location.href='index.html'" style="cursor:pointer">JKT48 SHOW THEATER</div>
+  <div class="theater-header" onclick="window.location.replace('index.html')" style="cursor:pointer">JKT48 SHOW THEATER</div>
   <div class="detail-header">
     <button onclick="goBack()" class="back-btn" aria-label="Kembali ke halaman sebelumnya">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -800,7 +801,7 @@ function goBack() {
   if (window.history.length > 1) {
     window.history.back();
   } else {
-    window.location.href = 'index.html';
+    window.location.replace('index.html');
   }
 }
 

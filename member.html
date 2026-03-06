@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <link rel="icon" type="image/png" href="img/favicon-theater-jkt48.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Detail Member - JKT48 Show Theater</title>
@@ -658,7 +659,7 @@ body.dark .spinner{border-color:rgba(255,255,255,0.1);border-top-color:#9ca3af}
 <header class="main-header">
   <!-- Baris 1: Background merah -->
   <div class="header-top-bar">
-    <span class="header-top-title" onclick="window.location.href='index.html'" style="cursor:pointer">JKT48 SHOW THEATER</span>
+    <span class="header-top-title" onclick="window.location.replace('index.html')" style="cursor:pointer">JKT48 SHOW THEATER</span>
   </div>
   <!-- Baris 2: Navigasi -->
   <div class="detail-header">
@@ -979,12 +980,10 @@ function adjustColor(color, amount) {
 function goBack() {
   if (isLoading) return;
   
-  const referrer = document.referrer;
-  const sameOrigin = referrer && referrer.includes(window.location.hostname);
-  if (sameOrigin) {
+  if (window.history.length > 1) {
     window.history.back();
   } else {
-    window.location.href = 'index.html';
+    window.location.replace('index.html');
   }
 }
 
