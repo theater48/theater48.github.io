@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <link rel="icon" type="image/png" href="img/favicon-theater-jkt48.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jadwal Show - JKT48 Show Theater</title>
@@ -647,7 +646,9 @@ function getSetlistColor(setlistName) {
     if (!setlistName) return '#e60012';
     const setlistLower = setlistName.toLowerCase().trim();
     
-    if (setlistLower.includes('te wo tsunaginagara') || 
+    if (setlistLower.includes('non_show') || setlistLower === 'non_show') {
+        return '#22c55e'; // hijau
+    } else if (setlistLower.includes('te wo tsunaginagara') || 
         setlistLower.includes('tewo') ||
         setlistLower.includes('tsunaginagara')) {
         return '#FF69B4';
@@ -673,7 +674,7 @@ function getSetlistsForDate(dateStr) {
         const key = `${show.setlist_name}_${show.show_time}`;
         if (!seen.has(key)) {
             seen.add(key);
-            const color = getSetlistColor(show.setlist_name);
+            const color = show.is_non_show ? '#22c55e' : getSetlistColor(show.setlist_name);
             uniqueShows.push({ 
                 color, 
                 name: show.setlist_name, 
