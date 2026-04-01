@@ -3233,6 +3233,14 @@ async function addShowWithSetlist(){
             showNotification('error', 'Insert Error', 'Gagal insert setlist: '+insertResult.error.message);
             return;
         }
+
+        // Jika graduation show, update is_graduated = true di tabel members
+        if (isGraduationShow && graduationMember) {
+            var gradMember = members.find(function(m){ return m.name === graduationMember; });
+            if (gradMember) {
+                await db.from('members').update({ is_graduated: true }).eq('id', gradMember.id);
+            }
+        }
         
         // Reload data members untuk mendapatkan count yang updated dari trigger
         await loadData();
@@ -3424,6 +3432,14 @@ async function bulkAddShows(){
             console.error('Bulk insert error:', insertResult.error);
             showNotification('error', 'Bulk Insert Error', 'Gagal insert bulk data: ' + insertResult.error.message);
             return;
+        }
+        
+        // Jika graduation show, update is_graduated = true di tabel members
+        if (isGraduationShow && graduationMember) {
+            var gradMemberBulk = members.find(function(m){ return m.name === graduationMember; });
+            if (gradMemberBulk) {
+                await db.from('members').update({ is_graduated: true }).eq('id', gradMemberBulk.id);
+            }
         }
         
         // Reload data members
