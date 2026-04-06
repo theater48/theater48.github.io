@@ -602,11 +602,12 @@ function getSetlistBannerUrl(setlistName) {
     'Pajama Drive': 'banner/pajama_drive.jpg',
     'Ramune no Nomikata': 'banner/ramune_no_nomikata.jpg',
     'Cara Meminum Ramune': 'banner/ramune_no_nomikata.jpg',
-    "Andai 'Ku Bukan Idola": "banner/Andai 'Ku Bukan Idola.jpg",
-    'JKT48 Fight Love Dream Passion': 'banner/JKT48 FIGHT LOVE DREAM PASSION.jpg',
-    'JKT48 School': 'banner/JKT48 SCHOOL.jpg',
-    'Seleksi PDMK': 'banner/SELEKSI PDMK.jpg',
-    'Z vs Alpha': 'banner/Z VS ALPHA.jpg',
+    "Passion 200%": "banner/passion.jpg",
+    "Passion 200% [SHONICHI]": "banner/passion.jpg"
+    "Dream 200%": "banner/dream.jpg",
+    "Dream 200% [SHONICHI]": "banner/dream.jpg"
+    "Love 200%": "banner/love.jpg",
+    "Love 200% [SHONICHI]": "banner/love.jpg"
   };
   
   const normalizedName = setlistName.trim();
@@ -619,6 +620,9 @@ function getSetlistBannerUrl(setlistName) {
   // Kalau gak ada, coba cari yang mirip (case-insensitive & partial match)
   const lowerName = normalizedName.toLowerCase();
   
+  if (lowerName.includes('passion')) {
+    return 'banner/passion.jpg';
+  }
   if (lowerName.includes('ramune')) {
     return 'banner/ramune_no_nomikata.jpg';
   }
