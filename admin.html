@@ -655,6 +655,49 @@ body.dark #bulkAddModal .modal-footer .btn-cancel { background:#374151;color:#e5
   background:#22c55e;color:#fff;font-weight:700;
 }
 
+/* Team Quick-Select Buttons */
+.team-select-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.team-btn {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 6px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.team-btn:active { transform: scale(0.95); }
+.team-btn-love   { background: rgba(244,63,94,0.12);  color: #f43f5e;  border-color: rgba(244,63,94,0.35); }
+.team-btn-dream  { background: rgba(168,85,247,0.12); color: #a855f7;  border-color: rgba(168,85,247,0.35); }
+.team-btn-passion{ background: rgba(249,115,22,0.12); color: #f97316;  border-color: rgba(249,115,22,0.35); }
+.team-btn-love:hover    { background: rgba(244,63,94,0.22);  border-color: #f43f5e; }
+.team-btn-dream:hover   { background: rgba(168,85,247,0.22); border-color: #a855f7; }
+.team-btn-passion:hover { background: rgba(249,115,22,0.22); border-color: #f97316; }
+.team-btn.active-love    { background: #f43f5e; color: #fff; border-color: #f43f5e; }
+.team-btn.active-dream   { background: #a855f7; color: #fff; border-color: #a855f7; }
+.team-btn.active-passion { background: #f97316; color: #fff; border-color: #f97316; }
+.team-select-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 /* Logout button with icon */
 .logout-btn {
   display: flex !important;
@@ -2061,6 +2104,24 @@ body.dark #confirmEslModal .modal-footer-sticky { background:#111827; border-top
       <!-- Member Names -->
       <div id="bulkMemberSection">
         <label class="input-label">Nama Member <span style="font-weight:400;color:#9ca3af;">(pisahkan dengan koma)</span></label>
+        <div class="team-select-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Pilih berdasarkan team
+        </div>
+        <div class="team-select-row">
+          <button type="button" class="team-btn team-btn-love" id="teamBtnLove" onclick="selectTeamMembers('Love')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+            Team Love
+          </button>
+          <button type="button" class="team-btn team-btn-dream" id="teamBtnDream" onclick="selectTeamMembers('Dream')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            Team Dream
+          </button>
+          <button type="button" class="team-btn team-btn-passion" id="teamBtnPassion" onclick="selectTeamMembers('Passion')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Team Passion
+          </button>
+        </div>
         <textarea class="member-textarea" id="bulkMemberNames" placeholder="Contoh: Cynthia, Danella, Eli, Elin, Ella, Fritzy, Indah, Kimmy"></textarea>
         <div class="tip-text" style="margin-top:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;vertical-align:middle;margin-right:5px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Nama harus persis sama dengan database (tidak case sensitive)</div>
       </div>
@@ -2331,6 +2392,48 @@ var currentMemberId=null;
 // Mapping untuk lookup cepat
 var memberIdMap = {}; // { memberName: memberId }
 var memberNameMap = {}; // { memberId: memberName }
+
+// Team Quick-Select
+function selectTeamMembers(team) {
+    var activeTeamMembers = members.filter(function(m) {
+        return m.team && m.team.toLowerCase() === team.toLowerCase() && m.status !== 'graduated';
+    });
+
+    if (activeTeamMembers.length === 0) {
+        showNotification('warning', 'Team ' + team, 'Tidak ada member aktif di team ini');
+        return;
+    }
+
+    var textarea = document.getElementById('bulkMemberNames');
+    var names = activeTeamMembers.map(function(m) { return m.name; }).join(', ');
+    textarea.value = names;
+
+    // Update active state tombol
+    ['Love','Dream','Passion'].forEach(function(t) {
+        var btn = document.getElementById('teamBtn' + t);
+        if (btn) {
+            btn.className = btn.className.replace(/\s*active-\w+/, '');
+            if (t === team) {
+                btn.classList.add('active-' + team.toLowerCase());
+            }
+        }
+    });
+
+    showNotification('info', 'Team ' + team, activeTeamMembers.length + ' member dipilih');
+}
+
+// Reset active state team btn saat textarea diketik manual
+document.addEventListener('DOMContentLoaded', function() {
+    var textarea = document.getElementById('bulkMemberNames');
+    if (textarea) {
+        textarea.addEventListener('input', function() {
+            ['Love','Dream','Passion'].forEach(function(t) {
+                var btn = document.getElementById('teamBtn' + t);
+                if (btn) btn.className = btn.className.replace(/\s*active-\w+/, '');
+            });
+        });
+    }
+});
 
 
 
