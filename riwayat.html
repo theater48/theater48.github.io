@@ -906,6 +906,11 @@ let memberData = null;
 let showsData = [];
 let currentFilter = 'all';
 
+function getSetlistShortName(setlistName) {
+  // Hapus suffix dalam kurung siku seperti [SHONICHI], [TEAM J], dll.
+  return setlistName.replace(/\s*\[.*?\]/g, '').trim();
+}
+
 function getFilterButtonsHTML() {
   const realShows = showsData.filter(s => !s.is_non_show);
   const eventShows = showsData.filter(s => s.is_non_show);
@@ -914,7 +919,8 @@ function getFilterButtonsHTML() {
   
   setlists.forEach(setlist => {
     const count = realShows.filter(s => s.setlist_name === setlist).length;
-    html += `<button class="filter-btn ${currentFilter === setlist ? 'active' : ''}" onclick="filterShows('${setlist}')" data-filter="${setlist}">${setlist} - ${count}</button>`;
+    const shortName = getSetlistShortName(setlist);
+    html += `<button class="filter-btn ${currentFilter === setlist ? 'active' : ''}" onclick="filterShows('${setlist.replace(/'/g, "\\'")}')" data-filter="${setlist}">${shortName} - ${count}</button>`;
   });
   
   if (eventShows.length > 0) {
