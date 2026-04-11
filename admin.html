@@ -754,14 +754,22 @@ body.dark #editShowModal .modal-divider { background:#1f2937; }
 #editShowModal .option-card-row { display:flex; align-items:center; gap:10px; cursor:pointer; }
 #editShowModal .option-card.birthday-card   { background:#fff5f5; border-color:#fecaca; }
 #editShowModal .option-card.graduation-card { background:#eff6ff; border-color:#bfdbfe; }
+#editShowModal .option-card.nonshow-card    { background:#f0fdf4; border-color:#86efac; }
+#editShowModal .option-card.schedule-card   { background:#f5f3ff; border-color:#ddd6fe; }
 body.dark #editShowModal .option-card.birthday-card   { background:#1f1818; border-color:#7f1d1d; }
 body.dark #editShowModal .option-card.graduation-card { background:#1a1f2e; border-color:#1e3a8a; }
+body.dark #editShowModal .option-card.nonshow-card    { background:#052e16; border-color:#166534; }
+body.dark #editShowModal .option-card.schedule-card   { background:#1e1b2e; border-color:#6d28d9; }
 #editShowModal .option-card input[type="checkbox"] { width:18px; height:18px; cursor:pointer; margin:0; flex-shrink:0; accent-color:#3b82f6; }
 #editShowModal .option-label { font-size:13px; font-weight:600; flex:1; display:flex; align-items:center; gap:7px; }
 #editShowModal .option-card.birthday-card   .option-label { color:#be123c; }
 #editShowModal .option-card.graduation-card .option-label { color:#1e40af; }
+#editShowModal .option-card.nonshow-card    .option-label { color:#166534; }
+#editShowModal .option-card.schedule-card   .option-label { color:#6d28d9; }
 body.dark #editShowModal .option-card.birthday-card   .option-label { color:#fca5a5; }
 body.dark #editShowModal .option-card.graduation-card .option-label { color:#93c5fd; }
+body.dark #editShowModal .option-card.nonshow-card    .option-label { color:#86efac; }
+body.dark #editShowModal .option-card.schedule-card   .option-label { color:#c4b5fd; }
 #editShowModal .option-dropdown { margin-top:10px; padding-top:10px; border-top:1px solid rgba(0,0,0,0.08); display:none; }
 body.dark #editShowModal .option-dropdown { border-top-color:rgba(255,255,255,0.06); }
 #editShowModal .option-dropdown.show { display:block; }
@@ -778,6 +786,71 @@ body.dark #editShowModal .modal-footer { background:#111827; border-top-color:#1
 .custom-setlist-field.show {
     display: block;
 }
+
+/* ===== SETLIST RADIO LIST ===== */
+.setlist-radio-list {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #1c2235;
+  margin-bottom: 10px;
+}
+.setlist-radio-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  cursor: pointer;
+  border-bottom: 1px solid #252d42;
+  transition: background 0.12s;
+  gap: 12px;
+  background: transparent;
+}
+.setlist-radio-item:last-child { border-bottom: none; }
+.setlist-radio-item:active { background: rgba(255,255,255,0.04); }
+.setlist-radio-label {
+  font-size: 15px;
+  font-weight: 400;
+  color: #e5e7eb;
+  flex: 1;
+}
+.setlist-radio-item.selected .setlist-radio-label { font-weight: 400; }
+.setlist-radio-dot {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid #4b5563;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+  background: transparent;
+}
+.setlist-radio-dot::after {
+  content: '';
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #fff;
+  display: none;
+}
+.setlist-radio-item.selected .setlist-radio-dot::after { display: block; }
+.setlist-radio-separator {
+  padding: 12px 18px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #9ca3af;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #252d42;
+  background: transparent;
+  display: flex; align-items: center; gap: 10px;
+  text-transform: uppercase;
+}
+.setlist-radio-separator::before,
+.setlist-radio-separator::after {
+  content: ''; flex: 1; height: 1px; background: #374151;
+}
+/* Override accent dot per modal */
+#setlistModal .setlist-radio-item.selected .setlist-radio-dot { border-color: #e60012; background: #e60012; }
+#editShowModal .setlist-radio-item.selected .setlist-radio-dot { border-color: #3b82f6; background: #3b82f6; }
+#bulkAddModal .setlist-radio-item.selected .setlist-radio-dot { border-color: #f59e0b; background: #f59e0b; }
+/* ===== END SETLIST RADIO LIST ===== */
 
 /* ===== RESPONSIVE BREAKPOINTS ===== */
 
@@ -1570,6 +1643,32 @@ body.dark #deleteShowListModal .modal-footer .btn-cancel { background:#374151; c
   display:flex; gap:10px;
 }
 body.dark #confirmEslModal .modal-footer-sticky { background:#111827; border-top-color:#1f2937; }
+#confirmEslModal .esl-options-grid { display:flex; flex-direction:column; gap:8px; margin:14px 0; }
+#confirmEslModal .esl-option-card { padding:12px 14px; border-radius:12px; border:1.5px solid; transition:all 0.2s; }
+#confirmEslModal .esl-option-card-row { display:flex; align-items:center; gap:10px; cursor:pointer; }
+#confirmEslModal .esl-option-card.birthday-card   { background:#fff5f5; border-color:#fecaca; }
+#confirmEslModal .esl-option-card.graduation-card { background:#eff6ff; border-color:#bfdbfe; }
+#confirmEslModal .esl-option-card.nonshow-card    { background:#f0fdf4; border-color:#86efac; }
+#confirmEslModal .esl-option-card.schedule-card   { background:#f5f3ff; border-color:#ddd6fe; }
+body.dark #confirmEslModal .esl-option-card.birthday-card   { background:#1f1818; border-color:#7f1d1d; }
+body.dark #confirmEslModal .esl-option-card.graduation-card { background:#1a1f2e; border-color:#1e3a8a; }
+body.dark #confirmEslModal .esl-option-card.nonshow-card    { background:#052e16; border-color:#166534; }
+body.dark #confirmEslModal .esl-option-card.schedule-card   { background:#1e1b2e; border-color:#6d28d9; }
+#confirmEslModal .esl-option-card input[type="checkbox"] { width:18px; height:18px; cursor:pointer; margin:0; flex-shrink:0; accent-color:#e60012; }
+#confirmEslModal .esl-option-label { font-size:13px; font-weight:600; flex:1; display:flex; align-items:center; gap:7px; }
+#confirmEslModal .esl-option-card.birthday-card   .esl-option-label { color:#be123c; }
+#confirmEslModal .esl-option-card.graduation-card .esl-option-label { color:#1e40af; }
+#confirmEslModal .esl-option-card.nonshow-card    .esl-option-label { color:#166534; }
+#confirmEslModal .esl-option-card.schedule-card   .esl-option-label { color:#6d28d9; }
+body.dark #confirmEslModal .esl-option-card.birthday-card   .esl-option-label { color:#fca5a5; }
+body.dark #confirmEslModal .esl-option-card.graduation-card .esl-option-label { color:#93c5fd; }
+body.dark #confirmEslModal .esl-option-card.nonshow-card    .esl-option-label { color:#86efac; }
+body.dark #confirmEslModal .esl-option-card.schedule-card   .esl-option-label { color:#c4b5fd; }
+#confirmEslModal .esl-option-dropdown { margin-top:10px; padding-top:10px; border-top:1px solid rgba(0,0,0,0.08); display:none; }
+body.dark #confirmEslModal .esl-option-dropdown { border-top-color:rgba(255,255,255,0.06); }
+#confirmEslModal .esl-option-dropdown.show { display:block; }
+#confirmEslModal .esl-option-dropdown select { width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #ddd;background:#fff;color:#333;font-size:13px;outline:none;margin:0; }
+body.dark #confirmEslModal .esl-option-dropdown select { background:#0a0e1a;color:#e5e7eb;border-color:#374151; }
 </style>
 </head>
 <body class="dark">
@@ -2198,7 +2297,15 @@ body.dark #confirmEslModal .modal-footer-sticky { background:#111827; border-top
       <!-- Edit info show -->
       <div>
         <label class="input-label">Nama Setlist</label>
-        <input type="text" id="eslSetlistName" placeholder="Nama setlist...">
+        <select id="eslSetlistSelect" onchange="eslToggleCustomSetlist()" style="width:100%;padding:12px;border-radius:12px;border:2px solid #374151;background:#0a0e1a;color:#e5e7eb;font-size:14px;outline:none;margin-bottom:10px;">
+          <option value="">Pilih Setlist...</option>
+          <option value="__custom__">Kustom Setlist (Ketik Manual)</option>
+        </select>
+        <div class="custom-setlist-field" id="eslCustomSetlistField">
+          <label class="input-label">Nama Setlist Kustom</label>
+          <input type="text" id="eslSetlistName" placeholder="Masukkan nama setlist..." maxlength="100">
+          <div class="tip-text"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;vertical-align:middle;margin-right:5px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Masukkan nama setlist bebas sesuai keinginan</div>
+        </div>
         <label class="input-label">Tanggal Show</label>
         <input type="date" id="eslShowDate">
         <label class="input-label">Waktu Show</label>
@@ -2206,7 +2313,7 @@ body.dark #confirmEslModal .modal-footer-sticky { background:#111827; border-top
       </div>
 
       <!-- Edit Member Section -->
-      <div style="margin-top:16px;">
+      <div style="margin-top:16px;" id="eslMemberSection">
         <div style="font-size:12px;font-weight:700;color:#6b7280;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Member di Show Ini</div>
         <div id="confirmEslMembers" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;min-height:28px;"></div>
         <label class="input-label">Tambah Member <span style="font-weight:400;color:#9ca3af;">(pisahkan dengan koma)</span></label>
@@ -2302,12 +2409,6 @@ body.dark #confirmEslModal .modal-footer-sticky { background:#111827; border-top
         </div>
       </div>
 
-      <!-- Member -->
-      <label class="input-label">Member</label>
-      <select id="editMemberSelect">
-        <option value="">-- Pilih Member --</option>
-      </select>
-
       <!-- Setlist -->
       <label class="input-label">Setlist</label>
       <select id="editSetlistSelect" onchange="toggleEditCustomSetlistField(); filterEditMemberBySetlist()">
@@ -2319,49 +2420,12 @@ body.dark #confirmEslModal .modal-footer-sticky { background:#111827; border-top
         <input type="text" id="editCustomSetlistName" placeholder="Masukkan nama setlist..." maxlength="100">
         <div class="tip-text"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;vertical-align:middle;margin-right:5px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Masukkan nama setlist bebas sesuai keinginan</div>
       </div>
+      <!-- Member -->
+      <label class="input-label">Member</label>
+      <select id="editMemberSelect">
+        <option value="">-- Pilih Member --</option>
+      </select>
 
-      <div class="modal-divider"></div>
-
-      <!-- Options: Birthday / Graduation -->
-      <div class="options-grid">
-
-        <!-- Birthday -->
-        <div class="option-card birthday-card" id="edit-birthday-card">
-          <label class="option-card-row">
-            <input type="checkbox" id="editIsBirthdayShow" onchange="toggleEditBirthdayField()">
-            <span class="option-label" style="display:flex;align-items:center;gap:7px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M7 4h0.01"/><path d="M12 4h0.01"/><path d="M17 4h0.01"/></svg>
-              Birthday Show (STS)
-            </span>
-          </label>
-          <div class="option-dropdown" id="editBirthdayMemberField">
-            <select id="editBirthdayMember">
-              <option value="">-- Pilih Member --</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Graduation -->
-        <div class="option-card graduation-card" id="edit-graduation-card">
-          <label class="option-card-row">
-            <input type="checkbox" id="editIsGraduationShow" onchange="toggleEditGraduationField()">
-            <span class="option-label" style="display:flex;align-items:center;gap:7px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-              Graduation Show (Last Show)
-            </span>
-          </label>
-          <div class="option-dropdown" id="editGraduationMemberField">
-            <div class="option-warning" style="background:#dbeafe;color:#1e40af;display:flex;align-items:flex-start;gap:6px;border-radius:8px;padding:7px 10px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              <span><strong>PERHATIAN:</strong> Centang jika ini adalah show terakhir untuk member!</span>
-            </div>
-            <select id="editGraduationMember">
-              <option value="">-- Pilih Member --</option>
-            </select>
-          </div>
-        </div>
-
-      </div>
     </div>
 
     <!-- Sticky footer -->
@@ -2378,9 +2442,120 @@ var SUPABASE_URL='https://pprxfopqkvpeajeoxzig.supabase.co';
 var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBwcnhmb3Bxa3ZwZWFqZW94emlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNTI4MTIsImV4cCI6MjA4MTgyODgxMn0.iXRO_dAHhtVHRLqGTresG_63RD2zIaopNXtXYNfthdg';
 var ADMIN_ACCOUNTS={'admin@jkt48.com':'jkt48admin','superadmin@jkt48.com':'jkt48super'};
 var GEN_COLORS={3:'#ec4899',6:'#22c55e',7:'#15803d',8:'#1e40af',9:'#06b6d4',10:'#38bdf8',11:'#f97316',12:'#fde68a',13:'#facc15',14:'#e879f9'};
-var SETLIST_INTI={'Cara Meminum Ramune':'Setlist segar seperti minuman ramune','Te Wo Tsunaginagara':'Setlist sambil bergandengan tangan','Pertaruhan Cinta':'Setlist tentang taruhan cinta untuk member inti'};
+var SETLIST_INTI={'Cara Meminum Ramune':'Setlist segar seperti minuman ramune','Te Wo Tsunaginagara':'Setlist sambil bergandengan tangan','Pertaruhan Cinta':'Setlist tentang taruhan cinta untuk member inti','Passion 200%':'Setlist penuh semangat 200% untuk member inti'};
 var SETLIST_TRAINEE={'Pajama Drive':'Setlist klasik untuk member trainee'};
 var SETLIST_INFO=Object.assign({},SETLIST_INTI,SETLIST_TRAINEE);
+// Mapping setlist per team — semua team inti dapat semua SETLIST_INTI
+var SETLIST_BY_TEAM={
+    'passion':SETLIST_INTI,
+    'love':SETLIST_INTI,
+    'dream':SETLIST_INTI
+};
+// Helper: dapatkan label team
+function getTeamLabel(team){ var t=(team||'').toLowerCase(); if(t==='passion') return 'Team Passion'; if(t==='love') return 'Team Love'; if(t==='dream') return 'Team Dream'; return 'INTI'; }
+
+// Populate <select> setlist per member (trainee / inti)
+function buildSetlistOptions(member, currentValue) {
+    var sel = document.getElementById('setlistSelect');
+    if (!sel) return;
+    // Reset
+    sel.innerHTML = '<option value="">Pilih Setlist...</option><option value="__custom__">Kustom Setlist (Ketik Manual)</option>';
+    if (!member || member.status === 'trainee') {
+        var grpT = document.createElement('optgroup');
+        grpT.label = 'TRAINEE';
+        for (var k in SETLIST_TRAINEE) {
+            var o = document.createElement('option');
+            o.value = k; o.textContent = k;
+            if (currentValue === k) o.selected = true;
+            grpT.appendChild(o);
+        }
+        sel.appendChild(grpT);
+    } else {
+        var team = (member.team || '').toLowerCase();
+        var teamSetlists = SETLIST_BY_TEAM[team] || SETLIST_INTI;
+        var teamLabel = getTeamLabel(member.team).toUpperCase();
+        var grpI = document.createElement('optgroup');
+        grpI.label = teamLabel;
+        for (var k in teamSetlists) {
+            var o = document.createElement('option');
+            o.value = k; o.textContent = k;
+            if (currentValue === k) o.selected = true;
+            grpI.appendChild(o);
+        }
+        sel.appendChild(grpI);
+    }
+    if (currentValue === '__custom__') sel.value = '__custom__';
+    else if (!currentValue) sel.value = '';
+}
+
+// Populate <select> setlist untuk Bulk Add (semua setlist)
+function buildSetlistOptionsAll(currentValue) {
+    var sel = document.getElementById('bulkSetlistSelect');
+    if (!sel) return;
+    sel.innerHTML = '<option value="">Pilih Setlist...</option><option value="__custom__">Kustom Setlist (Ketik Manual)</option>';
+    var grpI = document.createElement('optgroup');
+    grpI.label = 'INTI';
+    for (var k in SETLIST_INTI) {
+        var o = document.createElement('option');
+        o.value = k; o.textContent = k;
+        if (currentValue === k) o.selected = true;
+        grpI.appendChild(o);
+    }
+    sel.appendChild(grpI);
+    var grpT = document.createElement('optgroup');
+    grpT.label = 'TRAINEE';
+    for (var k in SETLIST_TRAINEE) {
+        var o = document.createElement('option');
+        o.value = k; o.textContent = k;
+        if (currentValue === k) o.selected = true;
+        grpT.appendChild(o);
+    }
+    sel.appendChild(grpT);
+    if (currentValue === '__custom__') sel.value = '__custom__';
+    else if (!currentValue) sel.value = '';
+}
+
+// Populate <select> setlist untuk editShowModal
+function buildEditSetlistOptions(member, currentValue) {
+    var sel = document.getElementById('editSetlistSelect');
+    if (!sel) return;
+    sel.innerHTML = '<option value="">Pilih Setlist...</option><option value="__custom__">Kustom Setlist (Ketik Manual)</option>';
+    if (!member || member.status === 'trainee') {
+        var grpT = document.createElement('optgroup');
+        grpT.label = 'TRAINEE';
+        for (var k in SETLIST_TRAINEE) {
+            var o = document.createElement('option');
+            o.value = k; o.textContent = k;
+            if (currentValue === k) o.selected = true;
+            grpT.appendChild(o);
+        }
+        sel.appendChild(grpT);
+    } else {
+        var team = (member.team || '').toLowerCase();
+        var teamSetlists = SETLIST_BY_TEAM[team] || SETLIST_INTI;
+        var teamLabel = getTeamLabel(member.team).toUpperCase();
+        var grpI = document.createElement('optgroup');
+        grpI.label = teamLabel;
+        for (var k in teamSetlists) {
+            var o = document.createElement('option');
+            o.value = k; o.textContent = k;
+            if (currentValue === k) o.selected = true;
+            grpI.appendChild(o);
+        }
+        sel.appendChild(grpI);
+    }
+    if (currentValue === '__custom__') sel.value = '__custom__';
+    else if (!currentValue) sel.value = '';
+}
+
+// Baca nilai terpilih dari <select> (kompatibel dengan kode lama yang pakai getRadioListValue)
+function getRadioListValue(containerId) {
+    // Map wrapper ID lama → select ID baru
+    var map = { 'setlistSelectWrap': 'setlistSelect', 'editSetlistSelectWrap': 'editSetlistSelect', 'bulkSetlistSelectWrap': 'bulkSetlistSelect' };
+    var selId = map[containerId] || containerId;
+    var el = document.getElementById(selId);
+    return el ? (el.value || '') : '';
+}
 var db=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 var members=[];
 var currentGen='all';
@@ -2822,19 +2997,18 @@ function isThisWeek(dateString) {
 // =================== CUSTOM SETLIST FUNCTIONS ===================
 
 function toggleCustomSetlistField() {
-    var select = document.getElementById('setlistSelect');
+    var value = document.getElementById('setlistSelect') ? document.getElementById('setlistSelect').value : '';
     var customField = document.getElementById('customSetlistField');
     var setlistInfo = document.getElementById('setlistInfo');
-    
-    if (select.value === '__custom__') {
+    if (value === '__custom__') {
         customField.classList.add('show');
         setlistInfo.style.display = 'none';
         document.getElementById('customSetlistName').focus();
     } else {
         customField.classList.remove('show');
-        if (select.value) {
+        if (value) {
             setlistInfo.style.display = 'block';
-            document.getElementById('setlistDescription').textContent = SETLIST_INFO[select.value] || '';
+            document.getElementById('setlistDescription').textContent = SETLIST_INFO[value] || '';
         } else {
             setlistInfo.style.display = 'none';
         }
@@ -2842,10 +3016,9 @@ function toggleCustomSetlistField() {
 }
 
 function toggleBulkCustomSetlistField() {
-    var select = document.getElementById('bulkSetlistSelect');
+    var value = document.getElementById('bulkSetlistSelect') ? document.getElementById('bulkSetlistSelect').value : '';
     var customField = document.getElementById('bulkCustomSetlistField');
-    
-    if (select.value === '__custom__') {
+    if (value === '__custom__') {
         customField.classList.add('show');
         document.getElementById('bulkCustomSetlistName').focus();
     } else {
@@ -2854,10 +3027,9 @@ function toggleBulkCustomSetlistField() {
 }
 
 function toggleEditCustomSetlistField() {
-    var select = document.getElementById('editSetlistSelect');
+    var value = document.getElementById('editSetlistSelect') ? document.getElementById('editSetlistSelect').value : '';
     var customField = document.getElementById('editCustomSetlistField');
-    
-    if (select.value === '__custom__') {
+    if (value === '__custom__') {
         customField.classList.add('show');
         document.getElementById('editCustomSetlistName').focus();
     } else {
@@ -2867,7 +3039,7 @@ function toggleEditCustomSetlistField() {
 
 // Filter dropdown member berdasarkan setlist yang dipilih di edit show
 function filterEditMemberBySetlist() {
-    var setlistVal = document.getElementById('editSetlistSelect').value;
+    var setlistVal = document.getElementById('editSetlistSelect') ? document.getElementById('editSetlistSelect').value : '';
     var memberSelect = document.getElementById('editMemberSelect');
     var currentVal = memberSelect.value;
     var allowedStatus = null;
@@ -2884,19 +3056,25 @@ function filterEditMemberBySetlist() {
 }
 
 function getSelectedSetlist(selectId, customInputId) {
-    var select = document.getElementById(selectId);
+    // selectId bisa berupa ID wrapper lama atau ID select langsung
+    var map = { 'setlistSelectWrap': 'setlistSelect', 'editSetlistSelectWrap': 'editSetlistSelect', 'bulkSetlistSelectWrap': 'bulkSetlistSelect' };
+    var selId = map[selectId] || selectId;
+    var selEl = document.getElementById(selId);
+    var value = selEl ? (selEl.value || '') : '';
     var customInput = document.getElementById(customInputId);
-    
-    if (select.value === '__custom__') {
-        var customName = customInput.value.trim();
+    if (!value) {
+        showNotification('warning', 'Validasi', 'Pilih setlist dulu');
+        return null;
+    }
+    if (value === '__custom__') {
+        var customName = customInput ? customInput.value.trim() : '';
         if (!customName) {
             showNotification('warning', 'Validasi', 'Masukkan nama setlist');
             return null;
         }
         return customName;
-    } else {
-        return select.value;
     }
+    return value;
 }
 
 // =================== BIRTHDAY & GRADUATION FUNCTIONS ===================
@@ -3060,44 +3238,6 @@ function toggleBulkGraduationField() {
     }
 }
 
-function toggleEditBirthdayField() {
-    var checkbox = document.getElementById('editIsBirthdayShow');
-    var graduationCheckbox = document.getElementById('editIsGraduationShow');
-    var field = document.getElementById('editBirthdayMemberField');
-    
-    if (checkbox.checked) {
-        if (graduationCheckbox.checked) {
-            showNotification('warning', 'Konflik', 'Birthday & Graduation tidak bisa bersamaan');
-            checkbox.checked = false;
-            return;
-        }
-        field.classList.add('show');
-        populateMemberDropdown('editBirthdayMember');
-    } else {
-        field.classList.remove('show');
-        document.getElementById('editBirthdayMember').value = '';
-    }
-}
-
-function toggleEditGraduationField() {
-    var checkbox = document.getElementById('editIsGraduationShow');
-    var birthdayCheckbox = document.getElementById('editIsBirthdayShow');
-    var field = document.getElementById('editGraduationMemberField');
-    
-    if (checkbox.checked) {
-        if (birthdayCheckbox.checked) {
-            showNotification('warning', 'Konflik', 'Birthday & Graduation tidak bisa bersamaan');
-            checkbox.checked = false;
-            return;
-        }
-        field.classList.add('show');
-        populateMemberDropdown('editGraduationMember');
-    } else {
-        field.classList.remove('show');
-        document.getElementById('editGraduationMember').value = '';
-    }
-}
-
 // Fungsi helper untuk populate dropdown
 function populateMemberDropdown(dropdownId) {
     var dropdown = document.getElementById(dropdownId);
@@ -3140,17 +3280,7 @@ function openSetlistModal(memberId){
     document.getElementById('showDate').value = getTodayDate();
     document.getElementById('showTime').value = '19:00';
     
-    var selectEl=document.getElementById('setlistSelect');
-    selectEl.innerHTML='<option value="">Pilih Setlist...</option>';
-    
-    // Tambahkan opsi kustom setlist
-    selectEl.innerHTML += '<option value="__custom__">Kustom Setlist (Ketik Manual)</option>';
-    
-    var setlists=member.status==='trainee'?SETLIST_TRAINEE:SETLIST_INTI;
-    for(var key in setlists){
-        selectEl.innerHTML+='<option value="'+key+'">'+key+'</option>';
-    }
-    selectEl.value='';
+    buildSetlistOptions(member, '');
     
     // Sembunyikan custom field dan info
     document.getElementById('customSetlistField').classList.remove('show');
@@ -3202,15 +3332,7 @@ function openBulkAddModal(){
     document.getElementById('bulkShowDate').value = getTodayDate();
     document.getElementById('bulkShowTime').value = '19:00';
     
-    var selectEl=document.getElementById('bulkSetlistSelect');
-    selectEl.innerHTML='<option value="">Pilih Setlist...</option>';
-    
-    // Tambahkan opsi kustom setlist
-    selectEl.innerHTML += '<option value="__custom__">Kustom Setlist (Ketik Manual)</option>';
-    
-    for(var key in SETLIST_INFO){
-        selectEl.innerHTML+='<option value="'+key+'">'+key+'</option>';
-    }
+    buildSetlistOptionsAll('');
     
     // Reset custom field
     document.getElementById('bulkCustomSetlistField').classList.remove('show');
@@ -3256,7 +3378,7 @@ function closeBulkAddModal(){
 
 async function addShowWithSetlist(){
     // Dapatkan setlist (bisa dari pilihan atau custom)
-    var setlist = getSelectedSetlist('setlistSelect', 'customSetlistName');
+    var setlist = getSelectedSetlist('setlistSelectWrap', 'customSetlistName');
     if (!setlist) return; // Error sudah ditampilkan di getSelectedSetlist
     
     var showDate=document.getElementById('showDate').value;
@@ -3407,7 +3529,7 @@ function toggleScheduleKosong() {
 
 async function bulkAddShows(){
     // Dapatkan setlist (bisa dari pilihan atau custom)
-    var setlist = getSelectedSetlist('bulkSetlistSelect', 'bulkCustomSetlistName');
+    var setlist = getSelectedSetlist('bulkSetlistSelectWrap', 'bulkCustomSetlistName');
     if (!setlist) return; // Error sudah ditampilkan di getSelectedSetlist
     
     var namesInput=document.getElementById('bulkMemberNames').value;
@@ -3812,87 +3934,26 @@ async function openEditShow(showId) {
             document.getElementById('editShowTime').value = '19:00';
         }
         
-        // Load setlist dropdown — tampilkan semua (inti + trainee)
-        var setlistSelect = document.getElementById('editSetlistSelect');
-        setlistSelect.innerHTML = '<option value="">Pilih Setlist...</option>';
-        setlistSelect.innerHTML += '<option value="__custom__">Kustom Setlist (Ketik Manual)</option>';
-        
-        // Kelompok INTI
-        setlistSelect.innerHTML += '<optgroup label="── INTI ──">';
-        for(var key in SETLIST_INTI){
-            var selected = (key === currentEditShowData.setlist_name) ? 'selected' : '';
-            setlistSelect.innerHTML += '<option value="' + key + '" ' + selected + '>' + key + '</option>';
-        }
-        setlistSelect.innerHTML += '</optgroup>';
-        
-        // Kelompok TRAINEE
-        setlistSelect.innerHTML += '<optgroup label="── TRAINEE ──">';
-        for(var key in SETLIST_TRAINEE){
-            var selected = (key === currentEditShowData.setlist_name) ? 'selected' : '';
-            setlistSelect.innerHTML += '<option value="' + key + '" ' + selected + '>' + key + '</option>';
-        }
-        setlistSelect.innerHTML += '</optgroup>';
+        // Load setlist — berdasarkan team/status member
+        var editMemberForSetlist = members.find(function(m){ return m.id === currentEditShowData.member_id; });
+        var allSetlists = Object.assign({}, SETLIST_INTI, SETLIST_TRAINEE);
+        var isCustomSetlist = currentEditShowData.setlist_name && !allSetlists[currentEditShowData.setlist_name];
+        // Kalau custom, render tanpa pre-select (nanti set manual); kalau normal, pre-select via currentValue
+        var preSelectVal = isCustomSetlist ? '__custom__' : (currentEditShowData.setlist_name || '');
+        document.getElementById('editSetlistSelectWrap') && (document.getElementById('editSetlistSelectWrap').innerHTML = '');
+        buildEditSetlistOptions(editMemberForSetlist, preSelectVal);
         
         // Reset custom field
         document.getElementById('editCustomSetlistField').classList.remove('show');
         document.getElementById('editCustomSetlistName').value = '';
         
-        // Jika setlist adalah custom (tidak ada di daftar), maka set ke custom dan isi field
-        var allSetlists = Object.assign({}, SETLIST_INTI, SETLIST_TRAINEE);
-        var isCustomSetlist = !allSetlists[currentEditShowData.setlist_name];
-        
-        if (isCustomSetlist && currentEditShowData.setlist_name) {
-            setlistSelect.value = '__custom__';
+        if (isCustomSetlist) {
             document.getElementById('editCustomSetlistField').classList.add('show');
             document.getElementById('editCustomSetlistName').value = currentEditShowData.setlist_name;
-        } else {
-            setlistSelect.value = currentEditShowData.setlist_name;
         }
         
         // Filter member berdasarkan setlist yang aktif
         filterEditMemberBySetlist();
-        
-        // Set birthday checkbox
-        var isBirthday = currentEditShowData.is_birthday_show;
-        document.getElementById('editIsBirthdayShow').checked = isBirthday;
-        if (isBirthday) {
-            document.getElementById('editBirthdayMemberField').classList.add('show');
-            populateMemberDropdown('editBirthdayMember');
-            document.getElementById('editBirthdayMember').value = currentEditShowData.birthday_member || '';
-        } else {
-            document.getElementById('editBirthdayMemberField').classList.remove('show');
-        }
-        
-        // Set graduation checkbox
-        var isGraduation = currentEditShowData.is_graduation_show;
-        document.getElementById('editIsGraduationShow').checked = isGraduation;
-        if (isGraduation) {
-            document.getElementById('editGraduationMemberField').classList.add('show');
-            populateMemberDropdown('editGraduationMember');
-            document.getElementById('editGraduationMember').value = currentEditShowData.graduation_member || '';
-        } else {
-            document.getElementById('editGraduationMemberField').classList.remove('show');
-        }
-
-        // Sembunyikan opsi Birthday & Graduation jika ini Non-Show atau member Trainee
-        var isNonShow = currentEditShowData.is_non_show;
-        var editMember = members.find(function(m){ return m.id === currentEditShowData.member_id; });
-        var isTrainee = editMember && editMember.status === 'trainee';
-        var showBirthdayGrad = !isNonShow && !isTrainee;
-
-        document.getElementById('edit-birthday-card').style.display = showBirthdayGrad ? 'block' : 'none';
-        document.getElementById('edit-graduation-card').style.display = showBirthdayGrad ? 'block' : 'none';
-
-        var divider = document.querySelector('#editShowModal .modal-divider');
-        if (divider) divider.style.display = showBirthdayGrad ? 'block' : 'none';
-
-        // Reset checkbox jika tersembunyi
-        if (!showBirthdayGrad) {
-            document.getElementById('editIsBirthdayShow').checked = false;
-            document.getElementById('editBirthdayMemberField').classList.remove('show');
-            document.getElementById('editIsGraduationShow').checked = false;
-            document.getElementById('editGraduationMemberField').classList.remove('show');
-        }
         
         document.getElementById('editShowModal').style.display = 'flex';
         
@@ -3912,71 +3973,31 @@ async function saveEditShow() {
     var memberId = document.getElementById('editMemberSelect').value;
     var showDate = document.getElementById('editShowDate').value;
     var showTime = document.getElementById('editShowTime').value;
-    
-    // Dapatkan setlist (bisa dari pilihan atau custom)
-    var setlist = getSelectedSetlist('editSetlistSelect', 'editCustomSetlistName');
-    if (!setlist) return; // Error sudah ditampilkan di getSelectedSetlist
-    
-    var isBirthdayShow = document.getElementById('editIsBirthdayShow').checked;
-    var birthdayMember = document.getElementById('editBirthdayMember').value;
-    var isGraduationShow = document.getElementById('editIsGraduationShow').checked;
-    var graduationMember = document.getElementById('editGraduationMember').value;
-    
-    // Validasi
-    if (!memberId) {
-        showNotification('warning', 'Validasi', 'Pilih member dulu');
-        return;
-    }
-    
-    if (!setlist) {
-        showNotification('warning', 'Validasi', 'Pilih setlist dulu');
-        return;
-    }
-    
-    if (!showDate) {
-        showNotification('warning', 'Validasi', 'Masukkan tanggal show');
-        return;
-    }
-    
-    if (isBirthdayShow && !birthdayMember) {
-        showNotification('warning', 'Validasi', 'Pilih member birthday');
-        return;
-    }
-    
-    if (isGraduationShow && !graduationMember) {
-        showNotification('warning', 'Validasi', 'Pilih member graduation');
-        return;
-    }
-    
-    if (isBirthdayShow && isGraduationShow) {
-        showNotification('warning', 'Konflik', 'Birthday & Graduation tidak bisa bersamaan');
-        return;
-    }
-    
-    // Cek apakah member yang dipilih sama dengan graduation member
-    var selectedMember = members.find(function(m) { return m.id == memberId });
-    if (isGraduationShow && selectedMember && graduationMember !== selectedMember.name) {
-        showNotification('warning', 'Validasi', 'Graduation hanya untuk member ini');
-        return;
-    }
-    
+
+    var setlist = getSelectedSetlist('editSetlistSelectWrap', 'editCustomSetlistName');
+    if (!setlist) return;
+
+    if (!memberId) { showNotification('warning', 'Validasi', 'Pilih member dulu'); return; }
+    if (!showDate) { showNotification('warning', 'Validasi', 'Masukkan tanggal show'); return; }
+
     try {
         var updateData = {
             member_id: memberId,
             setlist_name: setlist,
             show_date: showDate,
-            show_time: showTime + ':00', // Tambah detik
-            is_birthday_show: isBirthdayShow,
-            birthday_member: isBirthdayShow ? birthdayMember : null,
-            is_graduation_show: isGraduationShow,
-            graduation_member: isGraduationShow ? graduationMember : null,
+            show_time: showTime + ':00',
+            is_non_show: false,
+            is_birthday_show: false,
+            birthday_member: null,
+            is_graduation_show: false,
+            graduation_member: null,
             updated_at: new Date().toISOString()
         };
-        
+
         var oldMemberId = currentEditShowData.member_id;
         var newMemberId = memberId;
         var memberChanged = String(oldMemberId) !== String(newMemberId);
-        var isNonShowRow = currentEditShowData.is_non_show;
+        var isNonShowRow = false;
 
         var updateResult = await db.from('setlist_performance')
             .update(updateData)
@@ -4175,30 +4196,38 @@ async function openMemberShowList(memberId) {
     try {
         var now = new Date();
 
+        var todayStr = now.toISOString().split('T')[0];
+        var SHOW_DURATION_MINUTES = 150;
+
         var result = await db.from('setlist_performance')
             .select('id, setlist_name, show_date, show_time')
             .eq('member_id', memberId)
-            .order('show_date', { ascending: false })
-            .order('show_time', { ascending: false });
+            .gte('show_date', todayStr)
+            .order('show_date', { ascending: true })
+            .order('show_time', { ascending: true });
 
         if (result.error) throw result.error;
 
-        var shows = result.data || [];
+        // Filter client-side: hanya show yang belum lewat jam tayang + 150 menit
+        var upcomingShows = (result.data || []).filter(function(s) {
+            if (!s.show_time) return false;
+            var showStart = new Date(s.show_date + 'T' + s.show_time);
+            var showEnd = new Date(showStart.getTime() + SHOW_DURATION_MINUTES * 60000);
+            return showEnd > now;
+        });
 
-        if (shows.length === 0) {
-            document.getElementById('mslList').innerHTML = '<div class="msl-empty">Belum ada show untuk member ini.</div>';
+        if (upcomingShows.length === 0) {
+            document.getElementById('mslList').innerHTML = '<div class="msl-empty">Tidak ada show yang bisa diedit.</div>';
             return;
         }
 
-        var html = shows.map(function(s) {
+        var html = upcomingShows.map(function(s) {
             var dateStr = formatDate(s.show_date);
             var timeStr = s.show_time ? formatTime(s.show_time) : '';
             var meta = dateStr + (timeStr ? ' · ' + timeStr : '');
-            var isPast = new Date(s.show_date + 'T' + (s.show_time || '23:59:59')) < now;
-            var pastLabel = isPast ? '<span style="font-size:9px;background:#374151;color:#9ca3af;border-radius:4px;padding:1px 6px;margin-left:4px;">Lewat</span>' : '';
             return '<div class="msl-item" onclick="pickShowToEdit(' + s.id + ')">' +
                 '<div>' +
-                  '<div class="msl-setlist">' + (s.setlist_name || '—') + pastLabel + '</div>' +
+                  '<div class="msl-setlist">' + (s.setlist_name || '—') + '</div>' +
                   '<div class="msl-date">' + meta + '</div>' +
                 '</div>' +
                 '<div class="msl-arrow">›</div>' +
@@ -4430,9 +4459,12 @@ async function openEditShowListModal() {
 
         if (result.error) throw result.error;
 
+        var SHOW_DURATION_MINUTES = 150; // sama dengan liveshow.html
         var shows = (result.data || []).filter(function(s) {
-            var time = s.show_time || '23:59:59';
-            return new Date(s.show_date + 'T' + time) > now;
+            if (!s.show_time) return false;
+            var showStart = new Date(s.show_date + 'T' + s.show_time);
+            var showEnd = new Date(showStart.getTime() + SHOW_DURATION_MINUTES * 60000);
+            return showEnd > now;
         });
 
         if (shows.length === 0) {
@@ -4487,8 +4519,8 @@ async function openEditShowListModal() {
             });
 
             listEl.appendChild(item);
-        });
 
+        });
     } catch(err) {
         document.getElementById('eslList').innerHTML = '<div class="msl-empty" style="color:#ef4444;">Gagal memuat: ' + err.message + '</div>';
     }
@@ -4498,25 +4530,68 @@ function closeEditShowListModal() {
     document.getElementById('editShowListModal').style.display = 'none';
 }
 
+function eslPopulateSetlistSelect(currentValue) {
+    var sel = document.getElementById('eslSetlistSelect');
+    if (!sel) return;
+    sel.innerHTML = '<option value="">Pilih Setlist...</option><option value="__custom__">Kustom Setlist (Ketik Manual)</option>';
+    var grpI = document.createElement('optgroup');
+    grpI.label = 'INTI';
+    for (var k in SETLIST_INTI) {
+        var o = document.createElement('option');
+        o.value = k; o.textContent = k;
+        if (currentValue === k) o.selected = true;
+        grpI.appendChild(o);
+    }
+    sel.appendChild(grpI);
+    var grpT = document.createElement('optgroup');
+    grpT.label = 'TRAINEE';
+    for (var k in SETLIST_TRAINEE) {
+        var o = document.createElement('option');
+        o.value = k; o.textContent = k;
+        if (currentValue === k) o.selected = true;
+        grpT.appendChild(o);
+    }
+    sel.appendChild(grpT);
+    if (currentValue === '__custom__') sel.value = '__custom__';
+    else if (!currentValue) sel.value = '';
+}
+
+function eslToggleCustomSetlist() {
+    var value = document.getElementById('eslSetlistSelect').value;
+    var customField = document.getElementById('eslCustomSetlistField');
+    if (value === '__custom__') {
+        customField.classList.add('show');
+        document.getElementById('eslSetlistName').focus();
+    } else {
+        customField.classList.remove('show');
+        document.getElementById('eslSetlistName').value = '';
+    }
+}
+
 function confirmEslEdit(group) {
     var dateStr = formatDate(group.show_date);
     var timeStr = group.show_time ? formatTime(group.show_time) : '';
     document.getElementById('confirmEslDesc').textContent = (group.setlist_name || '—') + ' · ' + dateStr + (timeStr ? ' · ' + timeStr : '');
 
     // Pre-fill form dengan data saat ini
-    document.getElementById('eslSetlistName').value = group.setlist_name || '';
+    var allSetlists = Object.assign({}, SETLIST_INTI, SETLIST_TRAINEE);
+    var isCustomSetlist = group.setlist_name && !allSetlists[group.setlist_name];
+    eslPopulateSetlistSelect(isCustomSetlist ? '__custom__' : (group.setlist_name || ''));
+    document.getElementById('eslCustomSetlistField').classList.toggle('show', isCustomSetlist);
+    document.getElementById('eslSetlistName').value = isCustomSetlist ? (group.setlist_name || '') : '';
     document.getElementById('eslShowDate').value = group.show_date || '';
     document.getElementById('eslShowTime').value = group.show_time ? group.show_time.substring(0,5) : '';
 
     // Clone members agar bisa diedit tanpa mutate group asli
     window._eslCurrentGroup = group;
-    window._eslOrigMemberCount = group.members ? group.members.length : 0; // snapshot jumlah member asli
+    window._eslOrigMemberCount = group.members ? group.members.length : 0;
     window._eslEditMembers = group.members.map(function(m){ return { rowId: m.rowId, name: m.name, member_id: m.id }; });
 
     eslRenderMemberChips();
 
     document.getElementById('eslMemberError').style.display = 'none';
     document.getElementById('eslAddMemberTextarea').value = '';
+
     document.getElementById('confirmEslModal').style.display = 'flex';
 }
 
@@ -4574,18 +4649,37 @@ function eslRemoveMember(idx) {
     eslRenderMemberChips();
 }
 
+function eslPopulateMemberDropdown(id) {
+    var sel = document.getElementById(id);
+    if (!sel) return;
+    var prev = sel.value;
+    sel.innerHTML = '<option value="">-- Pilih Member --</option>';
+    (members || []).filter(function(m){ return m.status !== 'graduated'; }).forEach(function(m){
+        sel.innerHTML += '<option value="' + m.name + '">' + m.name + '</option>';
+    });
+    sel.value = prev;
+}
+
 async function doEditEslShow() {
     var group = window._eslCurrentGroup;
     if (!group) return;
 
-    var newSetlist = document.getElementById('eslSetlistName').value.trim();
+    var eslSelVal = document.getElementById('eslSetlistSelect').value;
+    var newSetlist = (eslSelVal === '__custom__' || eslSelVal === '')
+        ? document.getElementById('eslSetlistName').value.trim()
+        : eslSelVal;
     var newDate = document.getElementById('eslShowDate').value;
     var newTime = document.getElementById('eslShowTime').value;
     var editMembers = window._eslEditMembers || [];
+    var eslIsNonShow = false;
+    var eslIsScheduleKosong = false;
+    var eslIsBirthday = false;
+    var eslBirthdayMember = null;
+    var eslIsGraduation = false;
+    var eslGraduationMember = null;
 
     if (!newSetlist) { showNotification('warning', 'Validasi', 'Nama setlist tidak boleh kosong'); return; }
     if (!newDate) { showNotification('warning', 'Validasi', 'Tanggal tidak boleh kosong'); return; }
-    // Schedule boleh kosong member-nya
 
     document.getElementById('confirmEslModal').style.display = 'none';
 
@@ -4593,7 +4687,12 @@ async function doEditEslShow() {
         var updateData = {
             setlist_name: newSetlist,
             show_date: newDate,
-            show_time: newTime ? newTime + ':00' : null
+            show_time: newTime ? newTime + ':00' : null,
+            is_non_show: eslIsNonShow,
+            is_birthday_show: eslIsBirthday && !eslIsNonShow && !eslIsScheduleKosong,
+            birthday_member: (eslIsBirthday && !eslIsNonShow && !eslIsScheduleKosong) ? eslBirthdayMember : null,
+            is_graduation_show: eslIsGraduation && !eslIsNonShow && !eslIsScheduleKosong,
+            graduation_member: (eslIsGraduation && !eslIsNonShow && !eslIsScheduleKosong) ? eslGraduationMember : null
         };
 
         var origRowIds = group.ids;
