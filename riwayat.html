@@ -872,7 +872,7 @@ const GEN_COLORS = {
 
 const LIVE_CONFIG = {
     BEFORE_MINUTES: 15,
-    DURATION_MINUTES: 155
+    DURATION_MINUTES: 150
 };
 
 (function initializeTheme() {
@@ -1191,7 +1191,7 @@ function formatTime(timeString, isNonShow) {
   const eh = String(Math.floor(endTotal / 60) % 24).padStart(2, '0');
   const em = String(endTotal % 60).padStart(2, '0');
   
-  return `${hours}:00 - ${eh}:00 WIB`;
+  return `${hours}:${minutes} - ${eh}:${em} WIB`;
 }
 
 function adjustColor(color, amount) {

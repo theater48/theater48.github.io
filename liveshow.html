@@ -541,13 +541,15 @@ const SETLIST_COLORS = {
   'Ramune no Nomikata':      { from: '#00CED1', to: '#008b8d' },
   'Pertaruhan Cinta':        { from: '#D30000', to: '#900603' },
   'Pajama Drive':            { from: '#00006d', to: '#000045' },
-  "Andai 'Ku Bukan Idola":   { from: '#f59e0b', to: '#b45309' },
-  'JKT48 Fight Love Dream Passion': { from: '#e60012', to: '#9f0000' },
-  'JKT48 School':            { from: '#22c55e', to: '#15803d' },
-  'Seleksi PDMK':            { from: '#6366f1', to: '#4338ca' },
-  'Z vs Alpha':              { from: '#64748b', to: '#334155' },
   // Non-Show Activity
   'non_show':                { from: '#3b82f6', to: '#1d4ed8' },
+  // Team Shows
+  'Passion 200%':            { from: '#f69220', to: '#c4711a' },
+  'Passion 200% [SHONICHI]': { from: '#f69220', to: '#c4711a' },
+  'Dream 200%':              { from: '#00a4a5', to: '#007b7c' },
+  'Dream 200% [SHONICHI]':   { from: '#00a4a5', to: '#007b7c' },
+  'Love 200%':               { from: '#e20785', to: '#a80562' },
+  'Love 200% [SHONICHI]':    { from: '#e20785', to: '#a80562' },
 };
 
 function getSetlistGradient(setlistName, isNonShow) {
@@ -557,6 +559,10 @@ function getSetlistGradient(setlistName, isNonShow) {
   }
   const col = SETLIST_COLORS[setlistName];
   if (col) return `linear-gradient(135deg, ${col.from} 0%, ${col.to} 100%)`;
+  const lower = (setlistName || '').toLowerCase();
+  if (lower.includes('passion')) return `linear-gradient(135deg, #f69220 0%, #c4711a 100%)`;
+  if (lower.includes('dream')) return `linear-gradient(135deg, #00a4a5 0%, #007b7c 100%)`;
+  if (lower.includes('love')) return `linear-gradient(135deg, #e20785 0%, #a80562 100%)`;
   return null;
 }
 

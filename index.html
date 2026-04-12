@@ -308,9 +308,9 @@ body.dark .detail-footer{background:#0a0e1a;color:#9ca3af;border-top-color:#3741
     <div class="filter-section">
         <div class="filter-section-title">FILTER TEAM</div>
         <div class="filter-row">
-            <button class="filter team-filter" onclick="filterTeam('Love')" style="background:#ec4899;color:#fff">Love</button>
-            <button class="filter team-filter" onclick="filterTeam('Dream')" style="background:#06b6d4;color:#fff">Dream</button>
-            <button class="filter team-filter" onclick="filterTeam('Passion')" style="background:#fbbf24;color:#fff">Passion</button>
+            <button class="filter team-filter" onclick="filterTeam('Love')" style="background:#e20785;color:#fff">Love</button>
+            <button class="filter team-filter" onclick="filterTeam('Dream')" style="background:#00a4a5;color:#fff">Dream</button>
+            <button class="filter team-filter" onclick="filterTeam('Passion')" style="background:#f69220;color:#fff">Passion</button>
         </div>
     </div>
 </div>
@@ -861,6 +861,7 @@ function renderSetlistMembers() {
 
 function updateStats() {
     const filtered = members.filter(m => {
+        if (m.is_graduated) return false;
         const matchGen = currentGen === 'all' || m.gen === currentGen;
         const matchTeam = currentTeam === 'all' || m.team === currentTeam;
         const matchSearch = !searchQuery || m.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -868,9 +869,7 @@ function updateStats() {
     });
     const total = filtered.length;
     const totalShows = filtered.reduce((sum, m) => sum + m.show, 0);
-    const graduatedCount = filtered.filter(m => m.status === 'graduated').length;
     let txt = `${total} members • ${totalShows.toLocaleString()} total shows`;
-    if (graduatedCount > 0) txt += ` • ${graduatedCount} Graduated`;
     if (currentGen !== 'all') txt += ' • Gen ' + currentGen;
     if (currentTeam !== 'all') txt += ' • ' + currentTeam;
     document.getElementById('stats').innerHTML = txt;

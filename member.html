@@ -770,7 +770,7 @@ function renderMember(member) {
         ${member.status !== 'trainee' ? `
         <div class="info-row">
           <div class="info-label">Team</div>
-          <div class="info-value">${member.team || '-'}</div>
+          <div class="info-value" style="color:${ member.team && member.team.toLowerCase()==='passion' ? '#f69220' : member.team && member.team.toLowerCase()==='dream' ? '#00a4a5' : member.team && member.team.toLowerCase()==='love' ? '#e20785' : 'inherit' };font-weight:${member.team ? '700' : 'inherit'}">${member.team || '-'}</div>
         </div>
         ` : ''}
         

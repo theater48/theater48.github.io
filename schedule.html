@@ -512,12 +512,14 @@ const SETLIST_COLORS = {
   'Ramune no Nomikata':      { from: '#00CED1', to: '#008b8d' },
   'Pertaruhan Cinta':        { from: '#D30000', to: '#900603' },
   'Pajama Drive':            { from: '#00006d', to: '#000045' },
-  "Andai 'Ku Bukan Idola":   { from: '#f59e0b', to: '#b45309' },
-  'JKT48 Fight Love Dream Passion': { from: '#e60012', to: '#9f0000' },
-  'JKT48 School':            { from: '#22c55e', to: '#15803d' },
-  'Seleksi PDMK':            { from: '#6366f1', to: '#4338ca' },
-  'Z vs Alpha':              { from: '#64748b', to: '#334155' },
   'non_show':                { from: '#3b82f6', to: '#1d4ed8' },
+  // Team Shows
+  'Passion 200%':            { from: '#f69220', to: '#c4711a' },
+  'Passion 200% [SHONICHI]': { from: '#f69220', to: '#c4711a' },
+  'Dream 200%':              { from: '#00a4a5', to: '#007b7c' },
+  'Dream 200% [SHONICHI]':   { from: '#00a4a5', to: '#007b7c' },
+  'Love 200%':               { from: '#e20785', to: '#a80562' },
+  'Love 200% [SHONICHI]':    { from: '#e20785', to: '#a80562' },
 };
 
 function getSetlistGradient(setlistName, isNonShow) {
@@ -529,6 +531,9 @@ function getSetlistGradient(setlistName, isNonShow) {
   if (lower.includes('ramune')) return `linear-gradient(135deg, #00CED1 0%, #008b8d 100%)`;
   if (lower.includes('pertaruhan')) return `linear-gradient(135deg, #D30000 0%, #900603 100%)`;
   if (lower.includes('pajama')) return `linear-gradient(135deg, #00006d 0%, #000045 100%)`;
+  if (lower.includes('passion')) return `linear-gradient(135deg, #f69220 0%, #c4711a 100%)`;
+  if (lower.includes('dream')) return `linear-gradient(135deg, #00a4a5 0%, #007b7c 100%)`;
+  if (lower.includes('love')) return `linear-gradient(135deg, #e20785 0%, #a80562 100%)`;
   return null;
 }
 
@@ -540,6 +545,9 @@ function getSetlistColor(setlistName) {
     if (l.includes('ramune')) return '#00CED1';
     if (l.includes('pertaruhan')) return '#D30000';
     if (l.includes('pajama')) return '#00006d';
+    if (l.includes('passion')) return '#f69220';
+    if (l.includes('dream')) return '#00a4a5';
+    if (l.includes('love')) return '#e20785';
     return '#e60012';
 }
 
@@ -733,7 +741,8 @@ function renderShows(date) {
         const [startHour, startMin] = show.time.split(':').map(Number);
         const endTotalMin = startHour * 60 + startMin + durationMins;
         const endHour = Math.floor(endTotalMin / 60) % 24;
-        const endTimeStr = String(endHour).padStart(2,'0') + ':00';
+        const endMin = endTotalMin % 60;
+        const endTimeStr = String(endHour).padStart(2,'0') + ':' + String(endMin).padStart(2,'0');
 
         const setlistParam = encodeURIComponent(show.setlist);
         const dateParam = encodeURIComponent(show.date);
@@ -764,7 +773,7 @@ function renderShows(date) {
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
-                            ${show.time.slice(0, 2)}:00 - ${endTimeStr} WIB
+                            ${show.time.slice(0, 5)} - ${endTimeStr} WIB
                         </div>
                         <div>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
