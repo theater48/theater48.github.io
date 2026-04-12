@@ -599,6 +599,9 @@ body.dark #bulkAddModal .modal-divider { background: #1f2937; }
 body.dark #bulkAddModal .option-card.birthday-card { background:#1f1818;border-color:#7f1d1d; }
 body.dark #bulkAddModal .option-card.graduation-card { background:#1a1f2e;border-color:#1e3a8a; }
 body.dark #bulkAddModal .option-card.nonshow-card { background:#052e16;border-color:#166534; }
+#bulkAddModal .option-card[style*="f5f3ff"] { background:#f5f3ff;border-color:#ddd6fe; }
+body.dark #bulkAddModal .option-card[style*="f5f3ff"] { background:#1e1b2e !important;border-color:#6d28d9 !important; }
+body.dark #setlistModal .option-card[style*="f5f3ff"] { background:#1e1b2e !important;border-color:#6d28d9 !important; }
 #bulkAddModal .option-card input[type="checkbox"] {
   width:18px;height:18px;cursor:pointer;margin:0;flex-shrink:0;
   accent-color:#e60012;
@@ -2056,23 +2059,41 @@ body.dark #confirmEslModal .esl-option-dropdown select { background:#0a0e1a;colo
           </div>
         </div>
 
-        <!-- Non-Show -->
-        <div class="option-card nonshow-card">
+        <!-- Non-Show Activity -->
+        <div class="option-card nonshow-card" id="setlist-nonshow-card">
           <label class="option-card-row">
-            <input type="checkbox" id="isNonShow" onchange="toggleSingleNonShowActivity()">
+            <input type="checkbox" id="isNonShowActivity" onchange="toggleSetlistNonShow()">
             <span class="option-label" style="display:flex;align-items:center;gap:7px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               Non-Show Activity (Ramadhan, dll)
             </span>
           </label>
-          <div class="non-show-info" id="singleNonShowInfo" style="margin-top:8px;font-size:11px;display:flex;align-items:center;gap:5px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
-            <span><strong>TIDAK</strong> menambah jumlah show di data member.</span>
+          <div class="option-dropdown" id="setlistNonShowInfo">
+            <div class="option-warning" style="background:#dcfce7;color:#166534;display:flex;align-items:flex-start;gap:6px;border-radius:8px;padding:7px 10px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <span>Aktivitas non-show akan dicatat sebagai kegiatan khusus (Ramadhan, event, dll). Tidak menambah hitungan show member.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schedule Kosong -->
+        <div class="option-card" style="background:#f5f3ff;border-color:#ddd6fe;" id="setlist-empty-card">
+          <label class="option-card-row">
+            <input type="checkbox" id="isEmptySchedule" onchange="toggleSetlistEmptySchedule()">
+            <span class="option-label" style="display:flex;align-items:center;gap:7px;color:#6d28d9;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+              Schedule Kosong (Tanpa Member)
+            </span>
+          </label>
+          <div class="option-dropdown" id="setlistEmptyInfo">
+            <div class="option-warning" style="background:#ede9fe;color:#6d28d9;display:flex;align-items:flex-start;gap:6px;border-radius:8px;padding:7px 10px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <span>Show akan dibuat tanpa member. Member bisa ditambah nanti lewat Edit Show.</span>
+            </div>
           </div>
         </div>
 
       </div>
-
 
 
     </div>
@@ -2168,36 +2189,40 @@ body.dark #confirmEslModal .esl-option-dropdown select { background:#0a0e1a;colo
           </div>
         </div>
 
-        <!-- Non-Show -->
+        <!-- Non-Show Activity -->
         <div class="option-card nonshow-card">
           <label class="option-card-row">
-            <input type="checkbox" id="bulkIsNonShow" onchange="toggleNonShowActivity()">
+            <input type="checkbox" id="bulkIsNonShowActivity" onchange="toggleBulkNonShow()">
             <span class="option-label" style="display:flex;align-items:center;gap:7px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-                Non-Show Activity (Ramadhan, dll)
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Non-Show Activity (Ramadhan, dll)
             </span>
           </label>
-          <div class="non-show-info" id="nonShowInfo" style="margin-top:8px;font-size:11px;display:flex;align-items:center;gap:5px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
-            <span><strong>TIDAK</strong> menambah jumlah show di data member.</span>
+          <div class="option-dropdown" id="bulkNonShowInfo">
+            <div class="option-warning" style="background:#dcfce7;color:#166534;display:flex;align-items:flex-start;gap:6px;border-radius:8px;padding:7px 10px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <span>Aktivitas non-show tidak menambah hitungan show member. Cocok untuk Ramadhan, event, dll.</span>
+            </div>
           </div>
         </div>
 
-      </div>
-
-      <!-- Toggle: Schedule Kosong -->
-      <div id="scheduleKosongCard" style="margin-bottom:12px;padding:12px 14px;border-radius:12px;border:1.5px solid #e5e7eb;background:#f9fafb;transition:all 0.2s;">
-        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
-          <input type="checkbox" id="isScheduleKosong" onchange="toggleScheduleKosong()" style="width:18px;height:18px;cursor:pointer;margin:0;accent-color:#8b5cf6;">
-          <span style="font-size:13px;font-weight:600;color:#6d28d9;display:flex;align-items:center;gap:6px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="15" x2="12" y2="15"/></svg>
-            Schedule Kosong (Tanpa Member)
-          </span>
-        </label>
-        <div id="scheduleKosongInfo" style="display:none;margin-top:8px;font-size:11px;color:#7c3aed;display:none;align-items:center;gap:5px;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span>Jadwal dibuat tanpa member — bisa diisi nanti lewat <strong>Edit Show</strong>.</span>
+        <!-- Schedule Kosong -->
+        <div class="option-card" style="background:#f5f3ff;border-color:#ddd6fe;">
+          <label class="option-card-row">
+            <input type="checkbox" id="bulkIsEmptySchedule" onchange="toggleBulkEmptySchedule()">
+            <span class="option-label" style="display:flex;align-items:center;gap:7px;color:#6d28d9;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+              Schedule Kosong (Tanpa Member)
+            </span>
+          </label>
+          <div class="option-dropdown" id="bulkEmptyScheduleInfo">
+            <div class="option-warning" style="background:#ede9fe;color:#6d28d9;display:flex;align-items:flex-start;gap:6px;border-radius:8px;padding:7px 10px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <span>Show dibuat tanpa member. Member bisa ditambah nanti lewat Edit Show. Input member di bawah akan diabaikan.</span>
+            </div>
+          </div>
         </div>
+
       </div>
 
       <!-- Member Names -->
@@ -2310,6 +2335,44 @@ body.dark #confirmEslModal .esl-option-dropdown select { background:#0a0e1a;colo
         <input type="date" id="eslShowDate">
         <label class="input-label">Waktu Show</label>
         <input type="time" id="eslShowTime">
+      </div>
+
+      <!-- Birthday & Graduation -->
+      <div style="height:1px;background:#1f2937;margin:14px 0;"></div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:4px;">
+
+        <!-- Birthday -->
+        <div style="padding:12px 14px;border-radius:12px;border:1.5px solid #7f1d1d;background:#1f1818;">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <input type="checkbox" id="eslIsBirthdayShow" onchange="eslToggleBirthday()" style="width:18px;height:18px;cursor:pointer;margin:0;accent-color:#e60012;flex-shrink:0;">
+            <span style="font-size:13px;font-weight:600;color:#fca5a5;display:flex;align-items:center;gap:7px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M7 4h0.01"/><path d="M12 4h0.01"/><path d="M17 4h0.01"/></svg>
+              Birthday Show (STS)
+            </span>
+          </label>
+          <div id="eslBirthdayMemberField" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
+            <select id="eslBirthdayMember" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #374151;background:#0a0e1a;color:#e5e7eb;font-size:13px;outline:none;margin:0;"><option value="">-- Pilih Member --</option></select>
+          </div>
+        </div>
+
+        <!-- Graduation -->
+        <div style="padding:12px 14px;border-radius:12px;border:1.5px solid #1e3a8a;background:#1a1f2e;">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <input type="checkbox" id="eslIsGraduationShow" onchange="eslToggleGraduation()" style="width:18px;height:18px;cursor:pointer;margin:0;accent-color:#3b82f6;flex-shrink:0;">
+            <span style="font-size:13px;font-weight:600;color:#93c5fd;display:flex;align-items:center;gap:7px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              Graduation Show (Last Show)
+            </span>
+          </label>
+          <div id="eslGraduationMemberField" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
+            <div style="background:rgba(30,58,138,0.5);color:#93c5fd;display:flex;align-items:flex-start;gap:6px;border-radius:8px;padding:7px 10px;font-size:12px;margin-bottom:8px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <span><strong>PERHATIAN:</strong> Centang jika ini show terakhir member!</span>
+            </div>
+            <select id="eslGraduationMember" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #374151;background:#0a0e1a;color:#e5e7eb;font-size:13px;outline:none;margin:0;"><option value="">-- Pilih Member --</option></select>
+          </div>
+        </div>
+
       </div>
 
       <!-- Edit Member Section -->
@@ -2425,6 +2488,44 @@ body.dark #confirmEslModal .esl-option-dropdown select { background:#0a0e1a;colo
       <select id="editMemberSelect">
         <option value="">-- Pilih Member --</option>
       </select>
+
+      <!-- Birthday & Graduation -->
+      <div style="height:1px;background:#1f2937;margin:14px 0;"></div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+
+        <!-- Birthday -->
+        <div style="padding:12px 14px;border-radius:12px;border:1.5px solid #7f1d1d;background:#1f1818;">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <input type="checkbox" id="editIsBirthdayShow" onchange="toggleEditBirthdayField()" style="width:18px;height:18px;cursor:pointer;margin:0;accent-color:#e60012;flex-shrink:0;">
+            <span style="font-size:13px;font-weight:600;color:#fca5a5;display:flex;align-items:center;gap:7px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M7 4h0.01"/><path d="M12 4h0.01"/><path d="M17 4h0.01"/></svg>
+              Birthday Show (STS)
+            </span>
+          </label>
+          <div id="editBirthdayMemberField" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
+            <select id="editBirthdayMember" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #374151;background:#0a0e1a;color:#e5e7eb;font-size:13px;outline:none;margin:0;"><option value="">-- Pilih Member --</option></select>
+          </div>
+        </div>
+
+        <!-- Graduation -->
+        <div style="padding:12px 14px;border-radius:12px;border:1.5px solid #1e3a8a;background:#1a1f2e;">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <input type="checkbox" id="editIsGraduationShow" onchange="toggleEditGraduationField()" style="width:18px;height:18px;cursor:pointer;margin:0;accent-color:#3b82f6;flex-shrink:0;">
+            <span style="font-size:13px;font-weight:600;color:#93c5fd;display:flex;align-items:center;gap:7px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              Graduation Show (Last Show)
+            </span>
+          </label>
+          <div id="editGraduationMemberField" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
+            <div style="background:rgba(30,58,138,0.5);color:#93c5fd;display:flex;align-items:flex-start;gap:6px;border-radius:8px;padding:7px 10px;font-size:12px;margin-bottom:8px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <span><strong>PERHATIAN:</strong> Centang jika ini show terakhir member!</span>
+            </div>
+            <select id="editGraduationMember" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #374151;background:#0a0e1a;color:#e5e7eb;font-size:13px;outline:none;margin:0;"><option value="">-- Pilih Member --</option></select>
+          </div>
+        </div>
+
+      </div>
 
     </div>
 
@@ -3079,61 +3180,14 @@ function getSelectedSetlist(selectId, customInputId) {
 
 // =================== BIRTHDAY & GRADUATION FUNCTIONS ===================
 
-// Fungsi utama untuk toggle
-function toggleSingleNonShowActivity() {
-    var checkbox = document.getElementById('isNonShow');
-    var birthdayCheckbox = document.getElementById('isBirthdayShow');
-    var graduationCheckbox = document.getElementById('isGraduationShow');
-    var birthdayCard = birthdayCheckbox ? birthdayCheckbox.closest('.option-card') : null;
-    var graduationCard = graduationCheckbox ? graduationCheckbox.closest('.option-card') : null;
-
-    if (checkbox.checked) {
-        if (birthdayCheckbox) {
-            birthdayCheckbox.checked = false;
-            birthdayCheckbox.disabled = true;
-            birthdayCheckbox.style.opacity = '0.35';
-            birthdayCheckbox.style.cursor = 'not-allowed';
-            var bLabel = birthdayCheckbox.closest('label');
-            if (bLabel) bLabel.style.pointerEvents = 'none';
-            document.getElementById('birthdayMemberField').classList.remove('show');
-        }
-        if (graduationCheckbox) {
-            graduationCheckbox.checked = false;
-            graduationCheckbox.disabled = true;
-            graduationCheckbox.style.opacity = '0.35';
-            graduationCheckbox.style.cursor = 'not-allowed';
-            var gLabel = graduationCheckbox.closest('label');
-            if (gLabel) gLabel.style.pointerEvents = 'none';
-            document.getElementById('graduationMemberField').classList.remove('show');
-        }
-    } else {
-        if (birthdayCheckbox) {
-            birthdayCheckbox.disabled = false; birthdayCheckbox.style.opacity = ''; birthdayCheckbox.style.cursor = '';
-            var bLabel = birthdayCheckbox.closest('label');
-            if (bLabel) bLabel.style.pointerEvents = '';
-        }
-        if (graduationCheckbox) {
-            graduationCheckbox.disabled = false; graduationCheckbox.style.opacity = ''; graduationCheckbox.style.cursor = '';
-            var gLabel = graduationCheckbox.closest('label');
-            if (gLabel) gLabel.style.pointerEvents = '';
-        }
-    }
-}
-
 function toggleBirthdayField() {
     var checkbox = document.getElementById('isBirthdayShow');
     var graduationCheckbox = document.getElementById('isGraduationShow');
-    var nonShowCheckbox = document.getElementById('isNonShow');
     var field = document.getElementById('birthdayMemberField');
     
     if (checkbox.checked) {
         if (graduationCheckbox.checked) {
             showNotification('warning', 'Konflik', 'Birthday & Graduation tidak bisa bersamaan');
-            checkbox.checked = false;
-            return;
-        }
-        if (nonShowCheckbox && nonShowCheckbox.checked) {
-            showNotification('warning', 'Konflik', 'Birthday & Non-Show tidak bisa bersamaan');
             checkbox.checked = false;
             return;
         }
@@ -3148,17 +3202,11 @@ function toggleBirthdayField() {
 function toggleGraduationField() {
     var checkbox = document.getElementById('isGraduationShow');
     var birthdayCheckbox = document.getElementById('isBirthdayShow');
-    var nonShowCheckbox = document.getElementById('isNonShow');
     var field = document.getElementById('graduationMemberField');
     
     if (checkbox.checked) {
         if (birthdayCheckbox.checked) {
             showNotification('warning', 'Konflik', 'Birthday & Graduation tidak bisa bersamaan');
-            checkbox.checked = false;
-            return;
-        }
-        if (nonShowCheckbox && nonShowCheckbox.checked) {
-            showNotification('warning', 'Konflik', 'Graduation & Non-Show tidak bisa bersamaan');
             checkbox.checked = false;
             return;
         }
@@ -3169,36 +3217,6 @@ function toggleGraduationField() {
         document.getElementById('graduationMember').value = '';
     }
 }
-
-function toggleNonShowActivity() {
-    var checkbox = document.getElementById('bulkIsNonShow');
-    var info = document.getElementById('nonShowInfo');
-    var btn = document.getElementById('bulkAddBtn');
-    var birthdayCheckbox = document.getElementById('bulkIsBirthdayShow');
-    var graduationCheckbox = document.getElementById('bulkIsGraduationShow');
-
-    if (checkbox.checked) {
-        btn.textContent = 'Tambah Aktivitas';
-        btn.style.background = '#22c55e';
-        // Disable birthday & graduation jika non-show
-        if (birthdayCheckbox.checked) {
-            birthdayCheckbox.checked = false;
-            document.getElementById('bulkBirthdayMemberField').classList.remove('show');
-        }
-        if (graduationCheckbox.checked) {
-            graduationCheckbox.checked = false;
-            document.getElementById('bulkGraduationMemberField').classList.remove('show');
-        }
-        birthdayCheckbox.disabled = true;
-        graduationCheckbox.disabled = true;
-    } else {
-        btn.textContent = 'Tambah Semua';
-        btn.style.background = '';
-        birthdayCheckbox.disabled = false;
-        graduationCheckbox.disabled = false;
-    }
-}
-
 
 function toggleBulkBirthdayField() {
     var checkbox = document.getElementById('bulkIsBirthdayShow');
@@ -3236,6 +3254,35 @@ function toggleBulkGraduationField() {
         field.classList.remove('show');
         document.getElementById('bulkGraduationMember').value = '';
     }
+}
+
+function toggleBulkNonShow() {
+    var cb = document.getElementById('bulkIsNonShowActivity');
+    var info = document.getElementById('bulkNonShowInfo');
+    info.classList.toggle('show', cb.checked);
+    if (cb.checked) {
+        document.getElementById('bulkMemberSection').style.opacity = '1';
+    }
+}
+
+function toggleBulkEmptySchedule() {
+    var cb = document.getElementById('bulkIsEmptySchedule');
+    var info = document.getElementById('bulkEmptyScheduleInfo');
+    info.classList.toggle('show', cb.checked);
+    // Redup-kan member section saat schedule kosong dipilih
+    document.getElementById('bulkMemberSection').style.opacity = cb.checked ? '0.4' : '1';
+}
+
+function toggleSetlistNonShow() {
+    var cb = document.getElementById('isNonShowActivity');
+    var info = document.getElementById('setlistNonShowInfo');
+    info.classList.toggle('show', cb.checked);
+}
+
+function toggleSetlistEmptySchedule() {
+    var cb = document.getElementById('isEmptySchedule');
+    var info = document.getElementById('setlistEmptyInfo');
+    info.classList.toggle('show', cb.checked);
 }
 
 // Fungsi helper untuk populate dropdown
@@ -3296,8 +3343,11 @@ function openSetlistModal(memberId){
     document.getElementById('graduationMember').value = member.name; // Auto select current member
     document.getElementById('graduationMemberField').classList.remove('show');
     
-    // Reset non-show
-    document.getElementById('isNonShow').checked = false;
+    // Reset Non-Show Activity & Schedule Kosong
+    document.getElementById('isNonShowActivity').checked = false;
+    document.getElementById('setlistNonShowInfo').classList.remove('show');
+    document.getElementById('isEmptySchedule').checked = false;
+    document.getElementById('setlistEmptyInfo').classList.remove('show');
     
     // Reset nama member manual
     var nameInput = document.getElementById('setlistMemberNameInput');
@@ -3349,23 +3399,16 @@ function openBulkAddModal(){
     document.getElementById('bulkGraduationMember').value = '';
     document.getElementById('bulkGraduationMemberField').classList.remove('show');
     
+    // Reset Non-Show Activity & Schedule Kosong
+    document.getElementById('bulkIsNonShowActivity').checked = false;
+    document.getElementById('bulkNonShowInfo').classList.remove('show');
+    document.getElementById('bulkIsEmptySchedule').checked = false;
+    document.getElementById('bulkEmptyScheduleInfo').classList.remove('show');
+    document.getElementById('bulkMemberSection').style.opacity = '1';
+    
     // Pre-populate dropdowns
     populateMemberDropdown('bulkBirthdayMember');
     populateMemberDropdown('bulkGraduationMember');
-    
-    // Reset non-show activity
-    document.getElementById('bulkIsNonShow').checked = false;
-    document.getElementById('bulkAddBtn').textContent = 'Tambah Semua';
-
-    // Reset schedule kosong
-    document.getElementById('isScheduleKosong').checked = false;
-    document.getElementById('bulkMemberSection').style.display = 'block';
-    document.getElementById('scheduleKosongInfo').style.display = 'none';
-    document.getElementById('scheduleKosongCard').style.borderColor = '#e5e7eb';
-    document.getElementById('scheduleKosongCard').style.background = '#f9fafb';
-    document.getElementById('bulkAddBtn').style.background = '';
-    document.getElementById('bulkIsBirthdayShow').disabled = false;
-    document.getElementById('bulkIsGraduationShow').disabled = false;
 
     document.getElementById('bulkAddModal').style.display='flex';
 }
@@ -3387,7 +3430,8 @@ async function addShowWithSetlist(){
     var birthdayMember=document.getElementById('birthdayMember').value;
     var isGraduationShow=document.getElementById('isGraduationShow').checked;
     var graduationMember=document.getElementById('graduationMember').value;
-    var isNonShow=document.getElementById('isNonShow').checked;
+    var isNonShowActivity=document.getElementById('isNonShowActivity').checked;
+    var isEmptySchedule=document.getElementById('isEmptySchedule').checked;
     
     if(!setlist){
         showNotification('warning', 'Peringatan', 'Pilih setlist dulu');
@@ -3434,6 +3478,33 @@ async function addShowWithSetlist(){
         showNotification('error', 'Konflik', 'Birthday & Graduation tidak bisa bersamaan');
         return;
     }
+
+    // Jika schedule kosong: insert tanpa member_id
+    if (isEmptySchedule) {
+        try {
+            var emptyData = {
+                member_id: null,
+                setlist_name: setlist,
+                show_date: showDate,
+                show_time: showTime,
+                is_birthday_show: false,
+                birthday_member: null,
+                is_graduation_show: false,
+                graduation_member: null,
+                is_non_show: isNonShowActivity,
+                created_at: new Date().toISOString()
+            };
+            var emptyResult = await db.from('setlist_performance').insert([emptyData]).select();
+            if (emptyResult.error) throw emptyResult.error;
+            showNotification('success', 'Schedule Dibuat', 'Schedule kosong berhasil dibuat. Tambah member lewat Edit Show.');
+            closeSetlistModal();
+            await loadData();
+            return;
+        } catch(err) {
+            showNotification('error', 'Error', 'Gagal buat schedule: ' + err.message);
+            return;
+        }
+    }
     
     try {
         var setlistData={
@@ -3445,7 +3516,7 @@ async function addShowWithSetlist(){
             birthday_member: isBirthdayShow ? birthdayMember : null,
             is_graduation_show: isGraduationShow,
             graduation_member: isGraduationShow ? graduationMember : null,
-            is_non_show: isNonShow,
+            is_non_show: isNonShowActivity,
             created_at:new Date().toISOString()
         };
         
@@ -3483,15 +3554,14 @@ async function addShowWithSetlist(){
             activityText = setlist;
         }
         
-        // Hitung count sesuai jenis: non-show → hitung is_non_show=true, show → hitung is_non_show=false
+        // Hitung count show
         var countResult = await db.from('setlist_performance')
             .select('id', { count: 'exact', head: true })
             .eq('member_id', updatedMember.id)
-            .eq('is_non_show', isNonShow);
+            .eq('is_non_show', false);
         var displayCount = countResult.count || updatedMember.show;
-        var changeVal = isNonShow ? 0 : 1;
         
-        addActivity(updatedMember.name, changeVal, displayCount, activityText, updatedMember.status, showDate, showTime, isNonShow, isBirthdayShow, isGraduationShow);
+        addActivity(updatedMember.name, 1, displayCount, activityText, updatedMember.status, showDate, showTime, false, isBirthdayShow, isGraduationShow);
         
         // Close modal
         closeSetlistModal();
@@ -3501,9 +3571,6 @@ async function addShowWithSetlist(){
         if (isGraduationShow) {
             successMessage = '[GRADUATED] ' + member.name + ' telah GRADUATED! Last show: ' + member.show + ' show (' + activityText + ')';
             showNotification('success', 'Graduation Success', successMessage);
-        } else if (isNonShow) {
-            successMessage = member.name + ': Non-Show Activity dicatat (' + activityText + ' - ' + formatDate(showDate) + ' ' + formatTime(showTime) + ')';
-            showNotification('success', 'Non-Show Dicatat', successMessage);
         } else {
             successMessage = member.name + ': ' + member.show + ' show (' + activityText + ' - ' + formatDate(showDate) + ' ' + formatTime(showTime) + ')';
             showNotification('success', 'Show Added', successMessage);
@@ -3513,18 +3580,6 @@ async function addShowWithSetlist(){
         console.error('Exception:',err);
         showNotification('error', 'Error', 'Error: '+err.message);
     }
-}
-
-function toggleScheduleKosong() {
-    var isKosong = document.getElementById('isScheduleKosong').checked;
-    var section = document.getElementById('bulkMemberSection');
-    var infoEl = document.getElementById('scheduleKosongInfo');
-    var card = document.getElementById('scheduleKosongCard');
-
-    section.style.display = isKosong ? 'none' : 'block';
-    infoEl.style.display = isKosong ? 'flex' : 'none';
-    card.style.borderColor = isKosong ? '#8b5cf6' : '#e5e7eb';
-    card.style.background = isKosong ? '#f5f3ff' : '#f9fafb';
 }
 
 async function bulkAddShows(){
@@ -3539,8 +3594,8 @@ async function bulkAddShows(){
     var birthdayMember=document.getElementById('bulkBirthdayMember').value;
     var isGraduationShow=document.getElementById('bulkIsGraduationShow').checked;
     var graduationMember=document.getElementById('bulkGraduationMember').value;
-    var isNonShow=document.getElementById('bulkIsNonShow').checked;
-    var isScheduleKosong=document.getElementById('isScheduleKosong').checked;
+    var isNonShowActivity=document.getElementById('bulkIsNonShowActivity').checked;
+    var isEmptySchedule=document.getElementById('bulkIsEmptySchedule').checked;
     
     if(!setlist){
         showNotification('warning', 'Peringatan', 'Pilih setlist dulu');
@@ -3559,30 +3614,33 @@ async function bulkAddShows(){
         }
     }
 
-    // ===== MODE SCHEDULE KOSONG =====
-    if (isScheduleKosong) {
+    // Jika schedule kosong: insert 1 row tanpa member_id
+    if (isEmptySchedule) {
         try {
-            var scheduleData = {
+            var emptyBulkData = {
                 member_id: null,
                 setlist_name: setlist,
                 show_date: showDate,
                 show_time: showTime,
-                is_non_show: isNonShow,
+                is_birthday_show: false,
+                birthday_member: null,
+                is_graduation_show: false,
+                graduation_member: null,
+                is_non_show: isNonShowActivity,
                 created_at: new Date().toISOString()
             };
-            var insertRes = await db.from('setlist_performance').insert([scheduleData]).select();
-            if (insertRes.error) throw insertRes.error;
-
-            showNotification('success', 'Schedule Dibuat', 'Jadwal "' + setlist + '" ' + formatDate(showDate) + ' berhasil dibuat tanpa member. Tambahkan member lewat Edit Show.');
+            var emptyBulkResult = await db.from('setlist_performance').insert([emptyBulkData]).select();
+            if (emptyBulkResult.error) throw emptyBulkResult.error;
+            showNotification('success', 'Schedule Dibuat', 'Schedule kosong berhasil dibuat. Tambah member lewat Edit Show.');
             closeBulkAddModal();
             await loadData();
+            return;
         } catch(err) {
             showNotification('error', 'Error', 'Gagal buat schedule: ' + err.message);
+            return;
         }
-        return;
     }
-    // ================================
-    
+
     if(!namesInput.trim()){
         showNotification('warning', 'Peringatan', 'Masukkan nama member');
         return;
@@ -3621,10 +3679,6 @@ async function bulkAddShows(){
             continue;
         }
         
-        // Determine if this member is the graduation member
-        var isThisGraduation = isGraduationShow && 
-                              graduationMember.toLowerCase() === member.name.toLowerCase();
-        
         var showData = {
             member_id: member.id,
             setlist_name: setlist,
@@ -3634,7 +3688,7 @@ async function bulkAddShows(){
             birthday_member: isBirthdayShow ? birthdayMember : null,
             is_graduation_show: isGraduationShow,
             graduation_member: isGraduationShow ? graduationMember : null,
-            is_non_show: isNonShow,
+            is_non_show: isNonShowActivity,
             created_at: new Date().toISOString()
         };
         
@@ -3670,7 +3724,6 @@ async function bulkAddShows(){
         // Reload data members
         await loadData();
         
-        // Add activity logs untuk yang berhasil
         for (var showData of bulkData) {
             var member = members.find(function(m) { return m.id === showData.member_id });
             if (member) {
@@ -3680,18 +3733,15 @@ async function bulkAddShows(){
                 } else if (showData.is_birthday_show) {
                     activityText += ' (STS ' + showData.birthday_member + ')';
                 }
-                // Hitung count sesuai jenis untuk activity log
                 var countRes = await db.from('setlist_performance')
                     .select('id', { count: 'exact', head: true })
                     .eq('member_id', member.id)
-                    .eq('is_non_show', showData.is_non_show);
+                    .eq('is_non_show', false);
                 var displayCount = countRes.count || member.show;
-                var changeVal = showData.is_non_show ? 0 : 1;
-                addActivity(member.name, changeVal, displayCount, activityText, member.status, showData.show_date, showData.show_time, showData.is_non_show, showData.is_birthday_show, showData.is_graduation_show);
+                addActivity(member.name, 1, displayCount, activityText, member.status, showData.show_date, showData.show_time, false, showData.is_birthday_show, showData.is_graduation_show);
             }
         }
 
-        // Add activity logs untuk yang GAGAL
         failedNames.forEach(function(failedEntry) {
             addActivityFailed(failedEntry);
         });
@@ -3702,16 +3752,10 @@ async function bulkAddShows(){
         var toastBirthdayInfo = isBirthdayShow ? ' (STS ' + birthdayMember + ')' : '';
         var toastGraduationInfo = isGraduationShow ? ' (LAST SHOW - ' + graduationMember + ')' : '';
         
-        var message = '';
-        if (isNonShow) {
-            message = ''+successCount+' member berhasil ditambahkan sebagai Non-Show Activity! ('+toastDateInfo+') — Show count TIDAK bertambah';
-            showNotification('success', 'Non-Show Activity Added', message);
-        } else if (isGraduationShow) {
-            message = ''+successCount+' member berhasil! ' + graduationMember + ' telah GRADUATED!'+toastBirthdayInfo+' ('+toastDateInfo+')';
-            showNotification('success', 'Success', message);
+        if (isGraduationShow) {
+            showNotification('success', 'Success', ''+successCount+' member berhasil! ' + graduationMember + ' telah GRADUATED!'+toastBirthdayInfo+' ('+toastDateInfo+')');
         } else {
-            message = ''+successCount+' member berhasil ditambahkan!'+toastBirthdayInfo+toastGraduationInfo+' ('+toastDateInfo+')';
-            showNotification('success', 'Success', message);
+            showNotification('success', 'Success', ''+successCount+' member berhasil ditambahkan!'+toastBirthdayInfo+toastGraduationInfo+' ('+toastDateInfo+')');
         }
         
     } catch(err) {
@@ -3954,7 +3998,19 @@ async function openEditShow(showId) {
         
         // Filter member berdasarkan setlist yang aktif
         filterEditMemberBySetlist();
-        
+
+        // Reset & pre-fill birthday/graduation
+        document.getElementById('editIsBirthdayShow').checked = !!currentEditShowData.is_birthday_show;
+        document.getElementById('editIsGraduationShow').checked = !!currentEditShowData.is_graduation_show;
+        editPopulateMemberDropdown('editBirthdayMember');
+        editPopulateMemberDropdown('editGraduationMember');
+        document.getElementById('editBirthdayMemberField').style.display = currentEditShowData.is_birthday_show ? 'block' : 'none';
+        document.getElementById('editGraduationMemberField').style.display = currentEditShowData.is_graduation_show ? 'block' : 'none';
+        if (currentEditShowData.is_birthday_show && currentEditShowData.birthday_member)
+            document.getElementById('editBirthdayMember').value = currentEditShowData.birthday_member;
+        if (currentEditShowData.is_graduation_show && currentEditShowData.graduation_member)
+            document.getElementById('editGraduationMember').value = currentEditShowData.graduation_member;
+
         document.getElementById('editShowModal').style.display = 'flex';
         
     } catch (err) {
@@ -3977,8 +4033,15 @@ async function saveEditShow() {
     var setlist = getSelectedSetlist('editSetlistSelectWrap', 'editCustomSetlistName');
     if (!setlist) return;
 
+    var isBirthdayShow = document.getElementById('editIsBirthdayShow').checked;
+    var birthdayMember = isBirthdayShow ? document.getElementById('editBirthdayMember').value : null;
+    var isGraduationShow = document.getElementById('editIsGraduationShow').checked;
+    var graduationMember = isGraduationShow ? document.getElementById('editGraduationMember').value : null;
+
     if (!memberId) { showNotification('warning', 'Validasi', 'Pilih member dulu'); return; }
     if (!showDate) { showNotification('warning', 'Validasi', 'Masukkan tanggal show'); return; }
+    if (isBirthdayShow && !birthdayMember) { showNotification('warning', 'Validasi', 'Pilih member birthday'); return; }
+    if (isGraduationShow && !graduationMember) { showNotification('warning', 'Validasi', 'Pilih member graduation'); return; }
 
     try {
         var updateData = {
@@ -3987,17 +4050,16 @@ async function saveEditShow() {
             show_date: showDate,
             show_time: showTime + ':00',
             is_non_show: false,
-            is_birthday_show: false,
-            birthday_member: null,
-            is_graduation_show: false,
-            graduation_member: null,
+            is_birthday_show: isBirthdayShow,
+            birthday_member: birthdayMember || null,
+            is_graduation_show: isGraduationShow,
+            graduation_member: graduationMember || null,
             updated_at: new Date().toISOString()
         };
 
         var oldMemberId = currentEditShowData.member_id;
         var newMemberId = memberId;
         var memberChanged = String(oldMemberId) !== String(newMemberId);
-        var isNonShowRow = false;
 
         var updateResult = await db.from('setlist_performance')
             .update(updateData)
@@ -4013,8 +4075,8 @@ async function saveEditShow() {
             return;
         }
 
-        // Kalau member berubah dan bukan non-show, +1 member baru, -1 member lama
-        if (memberChanged && !isNonShowRow) {
+        // Kalau member berubah, +1 member baru, -1 member lama
+        if (memberChanged) {
             var oldMemberData = members.find(function(m){ return m.id == oldMemberId; });
             var newMemberData = members.find(function(m){ return m.id == newMemberId; });
 
@@ -4039,10 +4101,6 @@ async function saveEditShow() {
         var message = memberChanged
             ? 'Show berhasil dipindah: ' + oldMemberName + ' → ' + newMemberName + ' (' + setlist + ' - ' + formatDate(showDate) + ' ' + formatTime(showTime) + ')'
             : 'Show berhasil diupdate: ' + newMemberName + ' (' + setlist + ' - ' + formatDate(showDate) + ' ' + formatTime(showTime) + ')';
-        
-        if (isGraduationShow) {
-            message = '' + newMemberName + ' graduation show berhasil diupdate!';
-        }
         
         showNotification('success', 'Edit Success', message);
         
@@ -4452,7 +4510,7 @@ async function openEditShowListModal() {
         var todayStr = now.toISOString().split('T')[0];
 
         var result = await db.from('setlist_performance')
-            .select('id, setlist_name, show_date, show_time, is_non_show, member_id, members(name)')
+            .select('id, setlist_name, show_date, show_time, is_non_show, is_birthday_show, birthday_member, is_graduation_show, graduation_member, member_id, members(name)')
             .gte('show_date', todayStr)
             .order('show_date', { ascending: true })
             .order('show_time', { ascending: true });
@@ -4477,7 +4535,7 @@ async function openEditShowListModal() {
         shows.forEach(function(s) {
             var key = (s.setlist_name || '') + '|' + s.show_date + '|' + (s.show_time || '');
             if (!groupMap[key]) {
-                groupMap[key] = { setlist_name: s.setlist_name, show_date: s.show_date, show_time: s.show_time, is_non_show: s.is_non_show, members: [], ids: [] };
+                groupMap[key] = { setlist_name: s.setlist_name, show_date: s.show_date, show_time: s.show_time, is_non_show: s.is_non_show, is_birthday_show: s.is_birthday_show, birthday_member: s.birthday_member, is_graduation_show: s.is_graduation_show, graduation_member: s.graduation_member, members: [], ids: [] };
             }
             // Hanya push member jika member_id tidak null
             if (s.member_id) {
@@ -4528,6 +4586,102 @@ async function openEditShowListModal() {
 
 function closeEditShowListModal() {
     document.getElementById('editShowListModal').style.display = 'none';
+}
+
+function eslToggleBirthday() {
+    var cb = document.getElementById('eslIsBirthdayShow');
+    var gradCb = document.getElementById('eslIsGraduationShow');
+    var field = document.getElementById('eslBirthdayMemberField');
+    if (cb.checked) {
+        if (gradCb && gradCb.checked) {
+            showNotification('warning', 'Konflik', 'Birthday & Graduation tidak bisa bersamaan');
+            cb.checked = false; return;
+        }
+        field.style.display = 'block';
+        eslPopulateMemberDropdown('eslBirthdayMember');
+    } else {
+        field.style.display = 'none';
+        document.getElementById('eslBirthdayMember').value = '';
+    }
+}
+
+function eslToggleGraduation() {
+    var cb = document.getElementById('eslIsGraduationShow');
+    var birthdayCb = document.getElementById('eslIsBirthdayShow');
+    var field = document.getElementById('eslGraduationMemberField');
+    if (cb.checked) {
+        if (birthdayCb && birthdayCb.checked) {
+            showNotification('warning', 'Konflik', 'Birthday & Graduation tidak bisa bersamaan');
+            cb.checked = false; return;
+        }
+        field.style.display = 'block';
+        eslPopulateMemberDropdown('eslGraduationMember');
+    } else {
+        field.style.display = 'none';
+        document.getElementById('eslGraduationMember').value = '';
+    }
+}
+
+function eslPopulateMemberDropdown(dropdownId) {
+    var sel = document.getElementById(dropdownId);
+    if (!sel) return;
+    var prev = sel.value;
+    sel.innerHTML = '<option value="">-- Pilih Member --</option>';
+    members.slice().sort(function(a,b){ return a.name.localeCompare(b.name); }).forEach(function(m) {
+        if (m.status === 'graduated') return;
+        var opt = document.createElement('option');
+        opt.value = m.name; opt.textContent = m.name;
+        if (m.name === prev) opt.selected = true;
+        sel.appendChild(opt);
+    });
+}
+
+function toggleEditBirthdayField() {
+    var cb = document.getElementById('editIsBirthdayShow');
+    var gradCb = document.getElementById('editIsGraduationShow');
+    var field = document.getElementById('editBirthdayMemberField');
+    if (cb.checked) {
+        if (gradCb && gradCb.checked) {
+            showNotification('warning', 'Konflik', 'Birthday & Graduation tidak bisa bersamaan');
+            cb.checked = false; return;
+        }
+        field.style.display = 'block';
+        editPopulateMemberDropdown('editBirthdayMember');
+    } else {
+        field.style.display = 'none';
+        document.getElementById('editBirthdayMember').value = '';
+    }
+}
+
+function toggleEditGraduationField() {
+    var cb = document.getElementById('editIsGraduationShow');
+    var birthdayCb = document.getElementById('editIsBirthdayShow');
+    var field = document.getElementById('editGraduationMemberField');
+    if (cb.checked) {
+        if (birthdayCb && birthdayCb.checked) {
+            showNotification('warning', 'Konflik', 'Birthday & Graduation tidak bisa bersamaan');
+            cb.checked = false; return;
+        }
+        field.style.display = 'block';
+        editPopulateMemberDropdown('editGraduationMember');
+    } else {
+        field.style.display = 'none';
+        document.getElementById('editGraduationMember').value = '';
+    }
+}
+
+function editPopulateMemberDropdown(dropdownId) {
+    var sel = document.getElementById(dropdownId);
+    if (!sel) return;
+    var prev = sel.value;
+    sel.innerHTML = '<option value="">-- Pilih Member --</option>';
+    members.slice().sort(function(a,b){ return a.name.localeCompare(b.name); }).forEach(function(m) {
+        if (m.status === 'graduated') return;
+        var opt = document.createElement('option');
+        opt.value = m.name; opt.textContent = m.name;
+        if (m.name === prev) opt.selected = true;
+        sel.appendChild(opt);
+    });
 }
 
 function eslPopulateSetlistSelect(currentValue) {
@@ -4591,6 +4745,16 @@ function confirmEslEdit(group) {
 
     document.getElementById('eslMemberError').style.display = 'none';
     document.getElementById('eslAddMemberTextarea').value = '';
+
+    // Reset & pre-fill birthday/graduation
+    document.getElementById('eslIsBirthdayShow').checked = !!group.is_birthday_show;
+    document.getElementById('eslIsGraduationShow').checked = !!group.is_graduation_show;
+    eslPopulateMemberDropdown('eslBirthdayMember');
+    eslPopulateMemberDropdown('eslGraduationMember');
+    document.getElementById('eslBirthdayMemberField').style.display = group.is_birthday_show ? 'block' : 'none';
+    document.getElementById('eslGraduationMemberField').style.display = group.is_graduation_show ? 'block' : 'none';
+    if (group.is_birthday_show && group.birthday_member) document.getElementById('eslBirthdayMember').value = group.birthday_member;
+    if (group.is_graduation_show && group.graduation_member) document.getElementById('eslGraduationMember').value = group.graduation_member;
 
     document.getElementById('confirmEslModal').style.display = 'flex';
 }
@@ -4671,15 +4835,15 @@ async function doEditEslShow() {
     var newDate = document.getElementById('eslShowDate').value;
     var newTime = document.getElementById('eslShowTime').value;
     var editMembers = window._eslEditMembers || [];
-    var eslIsNonShow = false;
-    var eslIsScheduleKosong = false;
-    var eslIsBirthday = false;
-    var eslBirthdayMember = null;
-    var eslIsGraduation = false;
-    var eslGraduationMember = null;
+    var eslIsBirthday = document.getElementById('eslIsBirthdayShow').checked;
+    var eslBirthdayMember = eslIsBirthday ? document.getElementById('eslBirthdayMember').value : null;
+    var eslIsGraduation = document.getElementById('eslIsGraduationShow').checked;
+    var eslGraduationMember = eslIsGraduation ? document.getElementById('eslGraduationMember').value : null;
 
     if (!newSetlist) { showNotification('warning', 'Validasi', 'Nama setlist tidak boleh kosong'); return; }
     if (!newDate) { showNotification('warning', 'Validasi', 'Tanggal tidak boleh kosong'); return; }
+    if (eslIsBirthday && !eslBirthdayMember) { showNotification('warning', 'Validasi', 'Pilih member birthday'); return; }
+    if (eslIsGraduation && !eslGraduationMember) { showNotification('warning', 'Validasi', 'Pilih member graduation'); return; }
 
     document.getElementById('confirmEslModal').style.display = 'none';
 
@@ -4688,11 +4852,11 @@ async function doEditEslShow() {
             setlist_name: newSetlist,
             show_date: newDate,
             show_time: newTime ? newTime + ':00' : null,
-            is_non_show: eslIsNonShow,
-            is_birthday_show: eslIsBirthday && !eslIsNonShow && !eslIsScheduleKosong,
-            birthday_member: (eslIsBirthday && !eslIsNonShow && !eslIsScheduleKosong) ? eslBirthdayMember : null,
-            is_graduation_show: eslIsGraduation && !eslIsNonShow && !eslIsScheduleKosong,
-            graduation_member: (eslIsGraduation && !eslIsNonShow && !eslIsScheduleKosong) ? eslGraduationMember : null
+            is_non_show: false,
+            is_birthday_show: eslIsBirthday,
+            birthday_member: eslBirthdayMember || null,
+            is_graduation_show: eslIsGraduation,
+            graduation_member: eslGraduationMember || null
         };
 
         var origRowIds = group.ids;
