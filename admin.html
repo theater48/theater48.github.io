@@ -2543,15 +2543,22 @@ var SUPABASE_URL='https://pprxfopqkvpeajeoxzig.supabase.co';
 var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBwcnhmb3Bxa3ZwZWFqZW94emlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNTI4MTIsImV4cCI6MjA4MTgyODgxMn0.iXRO_dAHhtVHRLqGTresG_63RD2zIaopNXtXYNfthdg';
 var ADMIN_ACCOUNTS={'admin@jkt48.com':'jkt48admin','superadmin@jkt48.com':'jkt48super'};
 var GEN_COLORS={3:'#ec4899',6:'#22c55e',7:'#15803d',8:'#1e40af',9:'#06b6d4',10:'#38bdf8',11:'#f97316',12:'#fde68a',13:'#facc15',14:'#e879f9'};
-var SETLIST_INTI={'Cara Meminum Ramune':'Setlist segar seperti minuman ramune','Te Wo Tsunaginagara':'Setlist sambil bergandengan tangan','Pertaruhan Cinta':'Setlist tentang taruhan cinta untuk member inti','Passion 200%':'Setlist penuh semangat 200% untuk member inti'};
+var SETLIST_INTI={'Cara Meminum Ramune':'Setlist segar seperti minuman ramune','Te Wo Tsunaginagara':'Setlist sambil bergandengan tangan','Pertaruhan Cinta':'Setlist tentang taruhan cinta untuk member inti'};
+var SETLIST_PASSION=Object.assign({},SETLIST_INTI,{'Passion 200%':'Setlist penuh semangat 200% untuk member inti'});
+var SETLIST_DREAM=Object.assign({},SETLIST_INTI,{'DREAM BAKUDAN':'Setlist spesial Team Dream — penuh ledakan energi'});
 var SETLIST_TRAINEE={'Pajama Drive':'Setlist klasik untuk member trainee'};
-var SETLIST_INFO=Object.assign({},SETLIST_INTI,SETLIST_TRAINEE);
+var SETLIST_INFO=Object.assign({},SETLIST_INTI,SETLIST_PASSION,SETLIST_DREAM,SETLIST_TRAINEE);
 // Mapping setlist per team — semua team inti dapat semua SETLIST_INTI
 var SETLIST_BY_TEAM={
-    'passion':SETLIST_INTI,
+    'passion':SETLIST_PASSION,
     'love':SETLIST_INTI,
-    'dream':SETLIST_INTI
+    'dream':SETLIST_DREAM
 };
+
+
+
+
+
 // Helper: dapatkan label team
 function getTeamLabel(team){ var t=(team||'').toLowerCase(); if(t==='passion') return 'Team Passion'; if(t==='love') return 'Team Love'; if(t==='dream') return 'Team Dream'; return 'INTI'; }
 
@@ -2603,6 +2610,28 @@ function buildSetlistOptionsAll(currentValue) {
         grpI.appendChild(o);
     }
     sel.appendChild(grpI);
+    var grpP = document.createElement('optgroup');
+    grpP.label = 'TEAM PASSION';
+    for (var k in SETLIST_PASSION) {
+        if (!(k in SETLIST_INTI)) {
+            var o = document.createElement('option');
+            o.value = k; o.textContent = k;
+            if (currentValue === k) o.selected = true;
+            grpP.appendChild(o);
+        }
+    }
+    if (grpP.children.length > 0) sel.appendChild(grpP);
+    var grpD = document.createElement('optgroup');
+    grpD.label = 'TEAM DREAM';
+    for (var k in SETLIST_DREAM) {
+        if (!(k in SETLIST_INTI)) {
+            var o = document.createElement('option');
+            o.value = k; o.textContent = k;
+            if (currentValue === k) o.selected = true;
+            grpD.appendChild(o);
+        }
+    }
+    if (grpD.children.length > 0) sel.appendChild(grpD);
     var grpT = document.createElement('optgroup');
     grpT.label = 'TRAINEE';
     for (var k in SETLIST_TRAINEE) {
@@ -3895,19 +3924,28 @@ function dismissConfirmToast() { closeConfirmDeleteModal(); }
 async function doRemoveShow(member, lastSetlist) {
     try {
         if (lastSetlist) {
+            // Pakai .select() agar Supabase return row terhapus — tanpa ini RLS block tidak terdeteksi
             var delResult = await db.from('setlist_performance')
                 .delete()
-                .eq('id', lastSetlist.id);
+                .eq('id', lastSetlist.id)
+                .select();
 
             if (delResult.error) {
                 if (delResult.error.code === '42501' || (delResult.error.message && delResult.error.message.toLowerCase().includes('permission'))) {
-                    showNotification('error', 'Akses Ditolak', 'Tidak ada izin hapus. Aktifkan DELETE policy di Supabase untuk tabel setlist_performance.');
+                    showNotification('error', 'Akses Ditolak', 'Hapus gagal. Buka Supabase → Table Editor → setlist_performance → Policies → tambah DELETE policy.');
                 } else {
                     showNotification('error', 'Gagal Hapus', delResult.error.message);
                 }
                 return;
             }
-            console.log('🗑️ Record dihapus (ID: '+lastSetlist.id+')');
+            // Supabase v2: RLS block tidak return error, tapi data kosong — verifikasi manual
+            if (!delResult.data || delResult.data.length === 0) {
+                var checkRes = await db.from('setlist_performance').select('id').eq('id', lastSetlist.id).maybeSingle();
+                if (checkRes.data) {
+                    showNotification('error', 'Akses Ditolak', 'Hapus gagal — aktifkan DELETE policy di Supabase untuk tabel setlist_performance.');
+                    return;
+                }
+            }
 
             // Kurangi -1 show di tabel members (kalau bukan non-show)
             if (!lastSetlist.is_non_show) {
@@ -4322,11 +4360,14 @@ async function openDeleteShowModal() {
     dslShowCache = {};
 
     try {
-        // Ambil semua show dari semua member
         var now = new Date();
+        // Hanya ambil show dari 7 hari ke belakang sampai masa depan
+        var past7 = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        var past7Str = past7.toISOString().split('T')[0];
 
         var result = await db.from('setlist_performance')
             .select('id, setlist_name, show_date, show_time, is_non_show, member_id, members(name)')
+            .gte('show_date', past7Str)
             .order('show_date', { ascending: false })
             .order('show_time', { ascending: false });
 
@@ -4454,13 +4495,22 @@ async function doDeleteDslShow() {
         }
 
         for (var i = 0; i < idsToDelete.length; i++) {
-            var delRes = await db.from('setlist_performance').delete().eq('id', idsToDelete[i]);
+            // Pakai .select() agar Supabase return row terhapus — tanpa ini RLS block tidak terdeteksi
+            var delRes = await db.from('setlist_performance').delete().eq('id', idsToDelete[i]).select();
             if (delRes.error) {
                 if (delRes.error.code === '42501' || (delRes.error.message && delRes.error.message.toLowerCase().includes('permission'))) {
-                    showNotification('error', 'Akses Ditolak', 'Tidak ada izin hapus. Aktifkan DELETE policy di Supabase untuk tabel setlist_performance.');
+                    showNotification('error', 'Akses Ditolak', 'Hapus gagal. Buka Supabase → Table Editor → setlist_performance → Policies → tambah DELETE policy.');
                     return;
                 }
                 throw delRes.error;
+            }
+            // Supabase v2: RLS block tidak return error, tapi data kosong — verifikasi manual
+            if (!delRes.data || delRes.data.length === 0) {
+                var checkRes = await db.from('setlist_performance').select('id').eq('id', idsToDelete[i]).maybeSingle();
+                if (checkRes.data) {
+                    showNotification('error', 'Akses Ditolak', 'Hapus gagal — aktifkan DELETE policy di Supabase untuk tabel setlist_performance.');
+                    return;
+                }
             }
         }
 
