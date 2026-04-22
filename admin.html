@@ -2546,12 +2546,13 @@ var GEN_COLORS={3:'#ec4899',6:'#22c55e',7:'#15803d',8:'#1e40af',9:'#06b6d4',10:'
 var SETLIST_INTI={'Cara Meminum Ramune':'Setlist segar seperti minuman ramune','Te Wo Tsunaginagara':'Setlist sambil bergandengan tangan','Pertaruhan Cinta':'Setlist tentang taruhan cinta untuk member inti'};
 var SETLIST_PASSION=Object.assign({},SETLIST_INTI,{'Passion 200%':'Setlist penuh semangat 200% untuk member inti'});
 var SETLIST_DREAM=Object.assign({},SETLIST_INTI,{'DREAM BAKUDAN':'Setlist spesial Team Dream — penuh ledakan energi'});
+var SETLIST_LOVE=Object.assign({},SETLIST_INTI,{'ITADAKI♥LOVE':'Setlist spesial Team Love — penuh cinta dan semangat'});
 var SETLIST_TRAINEE={'Pajama Drive':'Setlist klasik untuk member trainee'};
-var SETLIST_INFO=Object.assign({},SETLIST_INTI,SETLIST_PASSION,SETLIST_DREAM,SETLIST_TRAINEE);
+var SETLIST_INFO=Object.assign({},SETLIST_INTI,SETLIST_PASSION,SETLIST_DREAM,SETLIST_LOVE,SETLIST_TRAINEE);
 // Mapping setlist per team — semua team inti dapat semua SETLIST_INTI
 var SETLIST_BY_TEAM={
     'passion':SETLIST_PASSION,
-    'love':SETLIST_INTI,
+    'love':SETLIST_LOVE,
     'dream':SETLIST_DREAM
 };
 
@@ -2632,6 +2633,17 @@ function buildSetlistOptionsAll(currentValue) {
         }
     }
     if (grpD.children.length > 0) sel.appendChild(grpD);
+    var grpL = document.createElement('optgroup');
+    grpL.label = 'TEAM LOVE';
+    for (var k in SETLIST_LOVE) {
+        if (!(k in SETLIST_INTI)) {
+            var o = document.createElement('option');
+            o.value = k; o.textContent = k;
+            if (currentValue === k) o.selected = true;
+            grpL.appendChild(o);
+        }
+    }
+    if (grpL.children.length > 0) sel.appendChild(grpL);
     var grpT = document.createElement('optgroup');
     grpT.label = 'TRAINEE';
     for (var k in SETLIST_TRAINEE) {

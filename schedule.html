@@ -243,6 +243,29 @@ body.dark .detail-footer{color:#9ca3af;border-top-color:#374151}
     .container{margin-top:0 !important;min-height:auto !important}
 }
 
+/* ============= TABLET PORTRAIT (481px – 768px) ============= */
+@media (min-width:481px) and (max-width:768px) and (orientation:portrait){
+    .main-header{position:sticky;top:0}
+    .container{margin-top:0 !important;min-height:auto;display:flex;flex-direction:column}
+    .calendar-section{padding:18px 20px;border-bottom:1px solid #e5e7eb}
+    body.dark .calendar-section{border-color:#374151}
+    .calendar-title{font-size:17px}
+    .calendar-nav button{width:34px;height:34px}
+    .calendar-grid{gap:6px}
+    .calendar-day-header{padding:10px 0;font-size:11px}
+    .calendar-day{padding:10px 0;font-size:14px;min-height:40px}
+    .calendar-indicator{width:5px;height:5px}
+    .shows-section{padding:18px 20px}
+    .section-title{font-size:15px;margin-bottom:16px}
+    .show-card-header{padding:15px 18px}
+    .show-card-title{font-size:15px;margin-bottom:8px}
+    .show-status-badge{font-size:11px;padding:4px 10px;margin-bottom:8px}
+    .show-card-time{font-size:12px;gap:6px}
+    .show-card-time svg{width:13px;height:13px}
+    .show-card-members{padding:12px 16px}
+    .show-card-members p{font-size:13px}
+}
+
 /* ============= MOBILE ============= */
 @media (max-width:480px){
     .main-header{position:sticky;top:0}
@@ -520,6 +543,7 @@ const SETLIST_COLORS = {
   'Dream 200% [SHONICHI]':   { from: '#00a4a5', to: '#007b7c' },
   'Love 200%':               { from: '#e20785', to: '#a80562' },
   'Love 200% [SHONICHI]':    { from: '#e20785', to: '#a80562' },
+  'ITADAKI♥LOVE':            { from: '#e20785', to: '#a80562' },
 };
 
 function getSetlistGradient(setlistName, isNonShow) {
