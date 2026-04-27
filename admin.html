@@ -4265,7 +4265,7 @@ async function loginWithGoogle() {
         const { data, error } = await db.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: window.location.origin + window.location.pathname
+                redirectTo: 'https://theaterjkt48.vercel.app/admin.html'
             }
         });
         
@@ -4289,22 +4289,15 @@ async function checkGoogleSession() {
         
         if (session && session.user) {
             console.log('Google OAuth berhasil:', session.user.email);
-            
-            // Set login info
             var email = session.user.email;
             var loginTime = new Date().getTime();
             localStorage.setItem('jkt48_admin_email', email);
             localStorage.setItem('jkt48_admin_login_time', loginTime.toString());
             localStorage.setItem('jkt48_admin_oauth_provider', 'google');
-            
-            // Hide login modal
             document.getElementById('loginModal').style.display = 'none';
-            
-            // Load data
             loadData();
             loadActivityLog();
             showNotification('success', 'Login', 'Berhasil login dengan Google');
-            
             return true;
         }
     } catch (err) {
@@ -5134,12 +5127,30 @@ function togglePasswordVisibility() {
 // Initialize
 document.addEventListener('DOMContentLoaded', async function() {
     document.body.classList.add('dark');
-    
-    // Cek Google OAuth session terlebih dahulu
+
+    var splash = document.getElementById('loginSplash');
+    var loginModal = document.getElementById('loginModal');
+    splash.style.display = 'none';
+
+    // Listen auth state change — handle redirect OAuth dari Google
+    db.auth.onAuthStateChange(async function(event, session) {
+        if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session && session.user) {
+            var email = session.user.email;
+            var loginTime = new Date().getTime();
+            localStorage.setItem('jkt48_admin_email', email);
+            localStorage.setItem('jkt48_admin_login_time', loginTime.toString());
+            localStorage.setItem('jkt48_admin_oauth_provider', 'google');
+            loginModal.style.display = 'none';
+            loadData();
+            loadActivityLog();
+            showNotification('success', 'Login', 'Berhasil login dengan Google');
+        }
+    });
+
+    // Cek session yang sudah ada
     var googleSessionValid = await checkGoogleSession();
-    
+
     if (!googleSessionValid && _needLogin) {
-        // Fetch stats for login panel even before login
         db.from('members').select('status,gen').then(function(result){
             if (!result.error && result.data) {
                 var active = result.data.filter(function(m){ return m.status !== 'graduated'; }).length;
@@ -5149,17 +5160,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (elG) elG.textContent = '14';
             }
         });
-    }
-    
-    // Skip splash animation - langsung tampilkan konten
-    var splash = document.getElementById('loginSplash');
-    var loginModal = document.getElementById('loginModal');
-    
-    // Langsung sembunyikan splash tanpa animasi
-    splash.style.display = 'none';
-    
-    if (_needLogin && !googleSessionValid) {
-        // Tampilkan login modal langsung
         loginModal.style.display = 'flex';
         loginModal.classList.add('animate-in');
     }
